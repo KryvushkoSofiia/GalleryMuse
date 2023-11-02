@@ -1,4 +1,5 @@
 from app.models import db, User, Gallery, GalleryFavorite, environment, SCHEMA
+from sqlalchemy.sql import text
 import random
 
 def seed_galleries_favorites(num_favorites=50):
