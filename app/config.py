@@ -1,8 +1,5 @@
 import os
 
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
-
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
