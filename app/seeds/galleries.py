@@ -8,7 +8,7 @@ fake = Faker()
 def seed_galleries(num_galleries=20):
     for _ in range(num_galleries):
         owner_id = random.randint(1, 20)
-        title = fake.sentence()
+        title = fake.sentence()[:50]
         description = fake.paragraph()
         location = fake.city()
         status = random.choice([True, False]) 
