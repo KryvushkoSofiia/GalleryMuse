@@ -1,8 +1,8 @@
-"""empty message
+"""initial migration
 
-Revision ID: e06e0df16f69
+Revision ID: e004f878b7f4
 Revises: 
-Create Date: 2023-11-02 00:14:44.163632
+Create Date: 2023-11-02 10:31:39.912467
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'e06e0df16f69'
+revision = 'e004f878b7f4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,8 +35,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-
-
     op.create_table('galleries',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
@@ -50,7 +48,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
     op.create_table('galleries_favorites',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -64,7 +61,6 @@ def upgrade():
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE galleries SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE galleries_favorites SET SCHEMA {SCHEMA};")
-
     # ### end Alembic commands ###
 
 
