@@ -12,7 +12,7 @@ def seed_galleries(num_galleries=20):
         description = fake.paragraph()
         location = fake.city()
         status = random.choice([True, False]) 
-        gallery_img = f'https://example.com/gallery/{random.randint(1, 100)}.jpg' 
+        gallery_img = fake.image_url()
 
         gallery = Gallery(
             owner_id=owner_id,

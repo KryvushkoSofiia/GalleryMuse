@@ -1,0 +1,19 @@
+  .profile-button{
+    font-family: 'DarkerGrotesque', sans-serif;
+    font-size: 28px;
+    background-color: transparent;
+    border: none;
+  }
+  
+  .profile_dropdown__item {
+    font-family: 'DarkerGrotesque', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    text-decoration: unset;
+    color: #000;
+  }
+
+  .dropdown_item__url{
+    color: #000;
+  }
+  

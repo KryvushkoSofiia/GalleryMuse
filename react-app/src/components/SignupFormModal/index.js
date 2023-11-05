@@ -8,6 +8,9 @@ function SignupFormModal() {
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [profilePicture, setProfilePicture] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
@@ -16,7 +19,7 @@ function SignupFormModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
+			const data = await dispatch(signUp(username, email, firstName, lastName, profilePicture, password));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -54,6 +57,36 @@ function SignupFormModal() {
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						required
+					/>
+				</label>
+				<label className="input-label">
+					First Name
+					<input
+						type="text"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
+						required
+						className="input-field"
+					/>
+				</label>
+				<label className="input-label">
+					Last Name
+					<input
+						type="text"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+						required
+						className="input-field"
+					/>
+				</label>
+				<label className="input-label">
+					Profile Picture
+					<input
+						type="text"
+						value={profilePicture}
+						onChange={(e) => setProfilePicture(e.target.value)}
+						required
+						className="input-field"
 					/>
 				</label>
 				<label>

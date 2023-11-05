@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+
 import { getGalleriesThunk } from '../../store/galleries';
 
 const GalleryList = () => {
@@ -28,10 +30,13 @@ const GalleryList = () => {
       <ul>
         {galleries.map((gallery) => (
           <li key={gallery.id}>
-            <h2>{gallery.title}</h2>
-            <p>{gallery.description}</p>
-            <p>Location: {gallery.location}</p>
-            <p>Created at: {gallery.created_at}</p>
+            <NavLink to={`/galleries/${gallery.id}`} activeClassName="active-link">
+              <h2>{gallery.title}</h2>
+              <img src={gallery.gallery_img} alt={gallery.title} />
+              <p>{gallery.description}</p>
+              <p>Location: {gallery.location}</p>
+              <p>Created at: {gallery.created_at}</p>
+            </NavLink>
           </li>
         ))}
       </ul>

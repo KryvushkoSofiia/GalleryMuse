@@ -19,7 +19,7 @@ def seed_users(num_users=20):
             email=email,
             first_name=first_name,
             last_name=last_name,
-            hashed_password=password,
+            password=password,
             profile_picture=profile_picture
         )
         db.session.add(user)

@@ -1,0 +1,43 @@
+// actions.js
+const READ_GALLERY_FAVORITES = 'galleryFavorites/READ_GALLERY_FAVORITES';
+
+const readGalleryFavorites = (galleryFavorites) => ({
+  type: READ_GALLERY_FAVORITES,
+  galleryFavorites,
+});
+
+export const getGalleryFavoritesThunk = () => async (dispatch) => {
+  try {
+    const response = await fetch('/api/galleries_favorites/');
+    if (response.ok) {
+      const data = await response.json();
+      const galleryFavorites = data.galleries_favorites;
+      dispatch(readGalleryFavorites(galleryFavorites));
+    } else {
+      throw new Error('Failed to fetch gallery favorites');
+    }
+  } catch (error) {
+    console.error('Error in getGalleryFavoritesThunk:', error);
+    throw error;
+  }
+};
+
+// reducer.js
+const initialState = {
+  galleryFavorites: [],
+};
+
+
+const galleryFavoritesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case READ_GALLERY_FAVORITES:
+      return {
+        ...state,
+        galleryFavorites: action.galleryFavorites,
+      };
+    default:
+      return state;
+  }
+};
+
+export default galleryFavoritesReducer;

@@ -9,6 +9,7 @@ import * as sessionActions from "./store/session";
 import App from "./App";
 
 import "./index.css";
+import './fonts/fonts.css'
 
 const store = configureStore();
 

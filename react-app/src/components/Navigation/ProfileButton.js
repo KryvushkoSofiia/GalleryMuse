@@ -4,6 +4,10 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
+
+import './ProfileButton.css'
+// import '../../fonts/fonts.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -38,19 +42,24 @@ function ProfileButton({ user }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
+
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button onClick={openMenu} className="profile-button">
+        {/* <i className="fas fa-user-circle" /> */}
+        Profile
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
+          <div className="profile_dropdown__wrapper">
+            <li className="profile_dropdown__item">{user.username}</li>
+            <li className="profile_dropdown__item">{user.email}</li>
+            <li className="profile_dropdown__item"><NavLink to={`/create-gallery`} activeClassName="active-link" className="dropdown_item__url">create gallery</NavLink></li>
+            <li className="profile_dropdown__item"><NavLink to={`/my-galleries`} activeClassName="active-link" className="dropdown_item__url">my galleries</NavLink></li>
+            <li className="profile_dropdown__item"><NavLink to={`/favorite-galleries`} activeClassName="active-link" className="dropdown_item__url">♡</NavLink></li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
           <>
             <OpenModalButton
