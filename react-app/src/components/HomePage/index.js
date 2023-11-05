@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { getGalleriesThunk } from '../../store/galleries';
+import { addToFavoritesThunk } from '../../store/galleries_favorites';
 
 const GalleryList = () => {
   const dispatch = useDispatch();
   const galleries = useSelector((state) =>
     Object.values(state.galleries.galleries)
   );
+
+  const addToFavorites = (galleryId) => {
+    dispatch(addToFavoritesThunk(galleryId));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +42,7 @@ const GalleryList = () => {
               <p>Location: {gallery.location}</p>
               <p>Created at: {gallery.created_at}</p>
             </NavLink>
+            <button onClick={() => addToFavorites(gallery.id)}>Add to Favorites</button>
           </li>
         ))}
       </ul>
