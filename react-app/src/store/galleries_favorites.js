@@ -1,6 +1,6 @@
-// actions.js
 const READ_GALLERY_FAVORITES = 'galleryFavorites/READ_GALLERY_FAVORITES';
 const ADD_TO_FAVORITES = 'galleryFavorites/ADD_TO_FAVORITES';
+const UPDATE_GALLERY_STATUS = 'galleryFavorites/UPDATE_GALLERY_STATUS';
 
 const readGalleryFavorites = (galleryFavorites) => ({
   type: READ_GALLERY_FAVORITES,
@@ -10,6 +10,12 @@ const readGalleryFavorites = (galleryFavorites) => ({
 const addToFavorites = (galleryId) => ({
   type: ADD_TO_FAVORITES,
   galleryId,
+});
+
+const updateGalleryStatus = (galleryId, newStatus) => ({
+  type: UPDATE_GALLERY_STATUS,
+  galleryId,
+  newStatus,
 });
 
 
@@ -45,7 +51,27 @@ export const addToFavoritesThunk = (galleryId) => async (dispatch) => {
   }
 };
 
-// reducer.js
+export const updateFavoriteGalleryThunk = (galleryId, newStatus) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/galleries_favorites/${galleryId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (response.ok) {
+      dispatch(updateGalleryStatus(galleryId, newStatus));
+    } else {
+      throw new Error('Failed to update gallery status');
+    }
+  } catch (error) {
+    console.error('Error in updateGalleryStatusThunk:', error);
+    throw error;
+  }
+};
+
+
 const initialState = {
   galleryFavorites: [],
 };
@@ -58,10 +84,19 @@ const galleryFavoritesReducer = (state = initialState, action) => {
         ...state,
         galleryFavorites: action.galleryFavorites,
       };
-      case ADD_TO_FAVORITES:
+    case ADD_TO_FAVORITES:
       return {
         ...state,
         galleryFavorites: [...state.galleryFavorites, action.galleryId],
+      };
+    case UPDATE_GALLERY_STATUS:
+      return {
+        ...state,
+        galleryFavorites: state.galleryFavorites.map((gallery) =>
+          gallery.id === action.galleryId
+            ? { ...gallery, status: action.newStatus }
+            : gallery
+        ),
       };
     default:
       return state;

@@ -20,6 +20,8 @@ const CreateNewGallery = () => {
         gallery_img: "",
     });
 
+    const [errors, setErrors] = useState({});
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -31,13 +33,36 @@ const CreateNewGallery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const createdGallery = await dispatch(createGalleryThunk(formData));
+        const newErrors = {};
 
-        if (createdGallery) {
-            history.push("/galleries/");
+        if (!formData.title || formData.title.length < 6 || formData.title.length > 50) {
+            newErrors.title = "Title is required and must be between 6 and 50 characters.";
+        }
+
+        if (!formData.description || formData.description.length < 30 || formData.description.length > 1000) {
+            newErrors.description = "Description is required and must be between 30 and 1000 characters.";
+        }
+
+        if (!formData.location || formData.location.length < 5 || formData.location.length > 255) {
+            newErrors.location = "Location is required and must be between 5 and 255 characters.";
+        }
+
+        const validUrlEndings = [".jpg", ".jpeg", ".png"];
+        if (!formData.gallery_img || !validUrlEndings.some((ending) => formData.gallery_img.toLowerCase().endsWith(ending))) {
+            newErrors.gallery_img = "Image URL is required and must end in .jpg, .jpeg, or .png";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+        } else {
+            const createdGallery = await dispatch(createGalleryThunk(formData));
+            if (createdGallery) {
+                history.push(`/galleries/${createdGallery.id}`);
+            } else {
+                console.log("Gallery creation failed");
+            }
         }
     };
-
     return (
         <div className="create-gallery__wrapper">
             {currentUser ? (
@@ -52,6 +77,7 @@ const CreateNewGallery = () => {
                             onChange={handleInputChange}
                             className="text-input"
                         />
+                        {errors.title && <span className="error">{errors.title}</span>}
                     </div>
 
                     <div className="form-group">
@@ -63,6 +89,7 @@ const CreateNewGallery = () => {
                             onChange={handleInputChange}
                             className="textarea-input"
                         />
+                        {errors.description && <span className="error">{errors.description}</span>}
                     </div>
 
                     <div className="form-group">
@@ -75,6 +102,7 @@ const CreateNewGallery = () => {
                             onChange={handleInputChange}
                             className="text-input"
                         />
+                        {errors.location && <span className="error">{errors.location}</span>}
                     </div>
 
                     <div className="form-group">
@@ -101,6 +129,7 @@ const CreateNewGallery = () => {
                             onChange={handleInputChange}
                             className="text-input"
                         />
+                        {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>}
                     </div>
 
                     <button type="submit" className="submit-button">Submit</button>

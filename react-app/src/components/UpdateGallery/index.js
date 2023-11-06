@@ -12,6 +12,8 @@ const EditGallery = () => {
   const history = useHistory();
   const { galleryId } = useParams();
 
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -28,7 +30,7 @@ const EditGallery = () => {
   }, [dispatch, galleryId]);
 
   useEffect(() => {
-  
+
     if (gallery && gallery.title) {
       setFormData({
         title: gallery.title,
@@ -40,7 +42,6 @@ const EditGallery = () => {
     }
   }, [gallery]);
 
-  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,8 +58,33 @@ const EditGallery = () => {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const newErrors = {};
+
+    if (!formData.title || formData.title.length < 6 || formData.title.length > 50) {
+      newErrors.title = "Title is required and must be between 6 and 50 characters";
+    }
+
+    if (!formData.description || formData.description.length < 30 || formData.description.length > 1000) {
+      newErrors.description = "Description is required and must be between 30 and 1000 characters";
+    }
+
+    if (!formData.location || formData.location.length < 5 || formData.location.length > 255) {
+      newErrors.location = "Location is required and must be between 5 and 255 characters.";
+    }
+
+    const validUrlEndings = [".jpg", ".jpeg", ".png"];
+    if (!formData.gallery_img || !validUrlEndings.some((ending) => formData.gallery_img.toLowerCase().endsWith(ending))) {
+      newErrors.gallery_img = "Image URL is required and must end in .jpg, .jpeg, or .png";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     const updatedGallery = await dispatch(
       updateGalleryThunk(formData, galleryId)
@@ -88,6 +114,7 @@ const EditGallery = () => {
             onChange={handleInputChange}
             className="text-input"
           />
+          {errors.title && <span className="error">{errors.title}</span>}
         </div>
 
         <div className="form-group">
@@ -99,6 +126,7 @@ const EditGallery = () => {
             onChange={handleInputChange}
             className="textarea-input"
           />
+          {errors.description && <span className="error">{errors.description}</span>}
         </div>
 
         <div className="form-group">
@@ -111,6 +139,7 @@ const EditGallery = () => {
             onChange={handleInputChange}
             className="text-input"
           />
+             {errors.location && <span className="error">{errors.location}</span>}
         </div>
 
         <div className="form-group">
@@ -137,6 +166,7 @@ const EditGallery = () => {
             onChange={handleInputChange}
             className="text-input"
           />
+          {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>}
         </div>
 
         <button type="submit" className="submit-button">Update Gallery</button>
