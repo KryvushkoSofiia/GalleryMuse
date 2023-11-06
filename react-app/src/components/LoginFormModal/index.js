@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { Link } from "react-router-dom";
+
+
 import "./LoginForm.css";
+
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -19,6 +23,14 @@ function LoginFormModal() {
     } else {
         closeModal()
     }
+  };
+
+  const handleDemoUser = async (e) => {
+    e.preventDefault();
+
+    return dispatch(login("demo@aa.io", "password")).then(() => {
+      closeModal();
+    });
   };
 
   return (
@@ -50,6 +62,9 @@ function LoginFormModal() {
         </label>
         <button type="submit">Log In</button>
       </form>
+      <Link onClick={handleDemoUser} className="demo-link">
+        Demo User
+      </Link>
     </>
   );
 }

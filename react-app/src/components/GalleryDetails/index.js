@@ -39,7 +39,7 @@ const GalleryDetail = () => {
 
       <p>Created at: {gallery.created_at}</p>
       <p>Owner ID: {gallery.owner_id}</p>
-      {gallery.status ? <p>Status: Active</p> : <p>Status: Inactive</p>}
+      {gallery.status ? <p>Status: Visited</p> : <p>Status: Not Visited</p>}
 
     </div>
   );

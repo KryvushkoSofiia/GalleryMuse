@@ -10,6 +10,7 @@ import GalleryDetails from  "./components/GalleryDetails"
 import CreateNewGallery from "./components/CreateNewGallery";
 import UpdateGallery from "./components/UpdateGallery";
 import FavoriteGalleries from "./components/FavoriteGalleries";
+import MyGalleries from "./components/MyGalleries";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/create-gallery" component={CreateNewGallery} />
           <Route exact path="/galleries/update/:galleryId" component={UpdateGallery} />
           <Route exact path="/favorite-galleries" component={FavoriteGalleries} />
+          <Route exact path="/my-galleries" component={MyGalleries} />
           <Route path="/login" >
             <LoginFormPage />
           </Route>

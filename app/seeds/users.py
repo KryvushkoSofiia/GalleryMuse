@@ -5,14 +5,15 @@ import random
 
 fake = Faker()
 
+
 def seed_users(num_users=20):
     for _ in range(num_users):
         username = fake.user_name()
         email = fake.email()
         first_name = fake.first_name()
         last_name = fake.last_name()
-        password='password'
-        profile_picture = f'https://example.com/profile/{random.randint(1, 100)}.jpg'
+        password = "password"
+        profile_picture = f"https://example.com/profile/{random.randint(1, 100)}.jpg"
 
         user = User(
             username=username,
@@ -20,9 +21,21 @@ def seed_users(num_users=20):
             first_name=first_name,
             last_name=last_name,
             password=password,
-            profile_picture=profile_picture
+            profile_picture=profile_picture,
         )
         db.session.add(user)
+
+        demo = User(
+            username="Demo",
+            email="demo@aa.io",
+            password="password",
+            first_name="Demo",
+            last_name="User",
+            profile_picture="https://i.pinimg.com/564x/a8/57/00/a85700f3c614f6313750b9d8196c08f5.jpg",
+        )
+    db.session.add(demo)
+
+    db.session.commit()
 
     db.session.commit()
 
@@ -38,5 +51,5 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-        
+
     db.session.commit()

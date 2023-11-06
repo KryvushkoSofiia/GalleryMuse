@@ -1,14 +1,18 @@
-  .profile-button{
+  .profile-button {
     font-family: 'DarkerGrotesque', sans-serif;
     font-size: 28px;
     background-color: transparent;
     border: none;
+    position: relative;
   }
 
-  .profile_dropdown__wrapper{
+  .profile_dropdown__wrapper {
     background-color: #fff;
+    width: 150px;
     display: flex;
     flex-direction: column;
+    position: absolute;
+    z-index: 1;
   }
 
 
@@ -22,19 +26,19 @@
     /* background-color: #ffffff; */
     margin: 5px 0;
     padding-left: 10px;
-    
+
   }
 
-  .dropdown_item__url:hover{
+  .dropdown_item__url:hover {
     color: #460b0b;
     border-bottom: 1px solid #460b0b;
   }
 
-  .dropdown_item__url{
+  .dropdown_item__url {
     color: #000;
   }
-  
-  .profile_dropdown__logout{
+
+  .profile_dropdown__logout {
     border: none;
     background-color: #460b0b;
     padding: 10px;
@@ -42,7 +46,14 @@
     font-weight: 600;
   }
 
-  .profile_dropdown__logout:hover{
-   color: #460b0b;
-   background-color: #fff;
+  .profile_dropdown__logout:hover {
+    color: #460b0b;
+    background-color: #fff;
+  }
+
+  
+  @media (max-width: 1720px) {
+    .profile_dropdown__wrapper {
+      right: -75px;
+    }
   }

@@ -1,0 +1,70 @@
+/* CreateNewGallery.css */
+
+.create-gallery__wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .create-gallery-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin: 10px 0;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .text-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .textarea-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical;
+  }
+  
+  select-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .submit-button {
+    background-color: #460b0b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #6b1515;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 14px;
+  }
+  
