@@ -4,16 +4,45 @@
     background-color: transparent;
     border: none;
   }
-  
+
+  .profile_dropdown__wrapper{
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+
   .profile_dropdown__item {
+    cursor: pointer;
     font-family: 'DarkerGrotesque', sans-serif;
     font-size: 22px;
     font-weight: 600;
     text-decoration: unset;
     color: #000;
+    /* background-color: #ffffff; */
+    margin: 5px 0;
+    padding-left: 10px;
+    
+  }
+
+  .dropdown_item__url:hover{
+    color: #460b0b;
+    border-bottom: 1px solid #460b0b;
   }
 
   .dropdown_item__url{
     color: #000;
   }
   
+  .profile_dropdown__logout{
+    border: none;
+    background-color: #460b0b;
+    padding: 10px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .profile_dropdown__logout:hover{
+   color: #460b0b;
+   background-color: #fff;
+  }

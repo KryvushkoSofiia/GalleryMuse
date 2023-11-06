@@ -57,7 +57,7 @@ function ProfileButton({ user }) {
             <li className="profile_dropdown__item"><NavLink to={`/my-galleries`} activeClassName="active-link" className="dropdown_item__url">my galleries</NavLink></li>
             <li className="profile_dropdown__item"><NavLink to={`/favorite-galleries`} activeClassName="active-link" className="dropdown_item__url">♡</NavLink></li>
             <li>
-              <button onClick={handleLogout}>Log Out</button>
+              <button className="profile_dropdown__logout" onClick={handleLogout}>Log Out</button>
             </li>
           </div>
         ) : (
