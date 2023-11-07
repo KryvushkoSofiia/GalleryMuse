@@ -1,0 +1,87 @@
+.background {
+    background-color: #460b0b;
+}
+
+.favorite-galleries_wrapper {
+    margin: 0 auto;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #fff; 
+}
+
+
+.favorite-galleries_header{
+    font-size: 28px;
+    font-family: 'DarkerGrotesque', sans-serif;
+    margin: 20px 0;
+}
+
+
+.favorite-galleries_wrapper ul {
+    list-style: none;
+    padding: 0;
+}
+
+.favorite-galleries_wrapper li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #ffffffd9; /* Add a semi-transparent white background */
+    padding: 15px; /* Add some padding for separation and readability */
+   
+}
+
+.favorite-galleries_wrapper li:nth-child(2n-1) {
+    /* Alternate row styling if needed */
+}
+
+.favorite-galleries_wrapper img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    border: 1px solid #fff ; 
+}
+
+.favorite-galleries_wrapper h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.favorite-galleries_wrapper p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.favorite-galleries_wrapper button {
+    font-family: 'DarkerGrotesque', sans-serif;
+    font-size: 18px;
+    background-color: #460b0b;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.favorite-galleries_wrapper button:hover {
+    background-color: #264813;
+    color: #fff; 
+}
+
+.favorite-gallery_info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+}
+
+.info p{
+    margin: 10px;
+}
