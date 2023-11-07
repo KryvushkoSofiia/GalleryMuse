@@ -13,103 +13,131 @@ function SignupFormModal() {
 	const [profilePicture, setProfilePicture] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (password === confirmPassword) {
+		const newErrors = {};
+
+		const validUrlEndings = [".jpg", ".jpeg", ".png"];
+		if (!profilePicture || !validUrlEndings.some((ending) => profilePicture.toLowerCase().endsWith(ending))) {
+			newErrors.profilePicture = "Profile Picture URL is required and must end in .jpg, .jpeg, or .png";
+		}
+
+		if (password !== confirmPassword) {
+			newErrors.confirmPassword = "Confirm Password field must be the same as the Password field";
+		}
+
+		if (!password || password.length < 6 || password.length > 20) {
+			newErrors.password = "Password is required and must be between 6 and 20 characters";
+		}
+
+		if (!username || username.length > 40) {
+			newErrors.username = "Username should not be longer than 40 characters";
+		}
+
+		if (!firstName || firstName.length > 50) {
+			newErrors.firstName = "First Name should not be longer than 50 characters";
+		}
+
+		if (!lastName || lastName.length > 50) {
+			newErrors.lastName = "Last Name should not be longer than 50 characters";
+		}
+
+		setErrors(newErrors);
+
+		if (Object.keys(newErrors).length === 0) {
 			const data = await dispatch(signUp(username, email, firstName, lastName, profilePicture, password));
 			if (data) {
 				setErrors(data);
 			} else {
 				closeModal();
 			}
-		} else {
-			setErrors([
-				"Confirm Password field must be the same as the Password field",
-			]);
 		}
 	};
-
 	return (
-		<>
-			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
-				<ul>
-					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
-					))}
-				</ul>
-				<label>
-					Email
-					<input
-						type="text"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						required
-					/>
-				</label>
-				<label>
-					Username
-					<input
-						type="text"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						required
-					/>
-				</label>
-				<label className="input-label">
-					First Name
-					<input
-						type="text"
-						value={firstName}
-						onChange={(e) => setFirstName(e.target.value)}
-						required
-						className="input-field"
-					/>
-				</label>
-				<label className="input-label">
-					Last Name
-					<input
-						type="text"
-						value={lastName}
-						onChange={(e) => setLastName(e.target.value)}
-						required
-						className="input-field"
-					/>
-				</label>
-				<label className="input-label">
-					Profile Picture
-					<input
-						type="text"
-						value={profilePicture}
-						onChange={(e) => setProfilePicture(e.target.value)}
-						required
-						className="input-field"
-					/>
-				</label>
-				<label>
-					Password
-					<input
-						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						required
-					/>
-				</label>
-				<label>
-					Confirm Password
-					<input
-						type="password"
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-						required
-					/>
-				</label>
-				<button type="submit">Sign Up</button>
+		<div className="signup-modal__wrapper">
+			<h1 className="signup_header">Sign Up</h1>
+			<form onSubmit={handleSubmit} className="signup_form">
+				<div className="signup-modal_inputs">
+					<label>
+						Email
+						<input
+							type="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
+						/>
+					</label>
+					{errors.email && <span className="error">{errors.email}</span>}
+					<label>
+						Username
+						<input
+							type="text"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							required
+						/>
+					</label>
+					{errors.username && <span className="error">{errors.username}</span>}
+					<label className="input-label">
+						First Name
+						<input
+							type="text"
+							value={firstName}
+							onChange={(e) => setFirstName(e.target.value)}
+							required
+							className="input-field"
+						/>
+					</label>
+					{errors.firstName && <span className="error">{errors.firstName}</span>}
+					<label className="input-label">
+						Last Name
+						<input
+							type="text"
+							value={lastName}
+							onChange={(e) => setLastName(e.target.value)}
+							required
+							className="input-field"
+						/>
+					</label>
+					{errors.lastName && <span className="error">{errors.lastName}</span>}
+					<label className="input-label">
+						Profile Picture
+						<input
+							type="text"
+							value={profilePicture}
+							onChange={(e) => setProfilePicture(e.target.value)}
+							required
+							className="input-field"
+						/>
+					</label>
+					{errors.profilePicture && <span className="error">{errors.profilePicture}</span>}
+					<label>
+						Password
+						<input
+							type="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
+					</label>
+					{errors.password && <span className="error">{errors.password}</span>}
+					<label>
+						Confirm Password
+						<input
+							type="password"
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+							required
+						/>
+					</label>
+					{errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
+				</div>
+				<button type="submit" className="signup_button">Sign Up</button>
 			</form>
-		</>
+		</div>
 	);
 }
 

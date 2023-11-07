@@ -1,0 +1,13 @@
+.open-modal{
+    cursor: pointer;
+    font-family: 'DarkerGrotesque', sans-serif;
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    color: #460b0b;
+    border: none;
+}
+
+.open-modal:hover{
+    border-bottom: 1px solid #460b0b;
+}
