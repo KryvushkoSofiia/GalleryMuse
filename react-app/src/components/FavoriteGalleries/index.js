@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGalleryFavoritesThunk, updateFavoriteGalleryThunk } from '../../store/galleries_favorites';
+import { getGalleryFavoritesThunk, addToFavoritesThunk, updateFavoriteGalleryThunk } from '../../store/galleries_favorites';
 import { getGalleriesThunk } from '../../store/galleries';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+import "./FavoriteGalleries.css"
 
 const GalleryFavoritesList = () => {
     const dispatch = useDispatch();
     const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
+    const currentUser = useSelector((state) => state.session.user);
     const [loading, setLoading] = useState(true);
     const [currentStatus, setCurrentStatus] = useState({});
-
-    // Use the useSelector hook to get galleries
     const galleries = useSelector((state) => Object.values(state.galleries.galleries));
+
+    const findGalleryById = (galleryId) => {
+        return galleries.find(gallery => gallery.id === galleryId);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,19 +25,16 @@ const GalleryFavoritesList = () => {
                 await dispatch(getGalleryFavoritesThunk());
 
                 if (galleries) {
-                  
                     const initialStatus = {};
                     galleries.forEach((gallery) => {
                         initialStatus[gallery.id] = gallery.status;
                     });
-                    // console.log("Initial status", initialStatus);
                     setCurrentStatus(initialStatus);
                 }
 
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching gallery favorites:', error);
-                // False - not show favorite galleries
                 setLoading(false);
             }
         };
@@ -41,17 +43,15 @@ const GalleryFavoritesList = () => {
             fetchData();
         }
     }, [dispatch, loading, galleries]);
+    console.log("fav length", galleryFavorites.length);
 
-    // Define handleStatusChange function as before
     const handleStatusChange = async (galleryId, gallery_id) => {
         try {
             const newStatus = !currentStatus[gallery_id];
 
             await dispatch(updateFavoriteGalleryThunk(galleryId, newStatus));
-
             await dispatch(getGalleriesThunk());
 
-            // Update the currentStatus state for the specific gallery
             setCurrentStatus((prevStatus) => ({
                 ...prevStatus,
                 [gallery_id]: newStatus,
@@ -63,25 +63,59 @@ const GalleryFavoritesList = () => {
         }
     };
 
+    const handleDelete = async (recordId) => {
+        try {
+            await dispatch(addToFavoritesThunk(recordId));
+            
+            await dispatch(getGalleryFavoritesThunk());
+        } catch (error) {
+            console.error('Error removing favorite gallery:', error);
+        }
+    }
+
     return (
-        <div>
-            <h1>Favorite Galleries</h1>
-            {loading ? (
-                <p>Loading data...</p>
-            ) : (
-                <ul>
-                    {galleryFavorites.map((favorite) => (
-                        <li key={favorite.id}>
-                            <p>Gallery id: {favorite.gallery_id}</p>
-                            <button
-                                onClick={() => handleStatusChange(favorite.id, favorite.gallery_id)}
-                            >
-                                {currentStatus[favorite.gallery_id] ? "Visited" : "Not Visited"}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
+        <div className='background'>
+            <div className='favorite-galleries_wrapper'>
+                {currentUser ? (
+                    <>
+                        <h1 className='favorite-galleries_header'>Favorite Galleries</h1>
+                        {loading ? (
+                            <p>Loading data...</p>
+                        ) : (
+                            <ul>
+                                {galleryFavorites.map((favorite) => {
+                                    const gallery = findGalleryById(favorite.gallery_id);
+
+                                    return (
+                                        <li key={favorite.id}>
+                                            <NavLink to={`/galleries/${favorite.gallery_id}`} className="">
+                                                {gallery && (
+                                                    <>
+                                                        <h2 className='title'>{gallery.title}</h2>
+                                                        <div className='favorite-gallery_info'>
+                                                            <img src={gallery.gallery_img} alt={gallery.title} />
+                                                            <div className='info'>
+                                                                <p>{gallery.description}</p>
+                                                                <p>Location: {gallery.location}</p>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )}
+                                                {/* <p>Gallery id: {favorite.gallery_id}</p> */}
+                                            </NavLink>
+
+                                            <button onClick={() => handleStatusChange(favorite.id, favorite.gallery_id)}>
+                                                {currentStatus[favorite.gallery_id] ? "Visited" : "Not Visited"}
+                                            </button>
+                                            <button onClick={() => handleDelete(favorite.gallery_id)}>Delete</button>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
+                    </>
+                ) : (<p>You need to login to see your favorite galleries.</p>)}
+            </div>
         </div>
     );
 };
