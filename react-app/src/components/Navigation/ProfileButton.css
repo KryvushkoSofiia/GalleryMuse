@@ -1,10 +1,17 @@
   .profile-button {
     font-family: 'DarkerGrotesque', sans-serif;
-    font-size: 28px;
+    font-size: 20px;
     background-color: transparent;
     border: none;
     position: relative;
+    cursor: pointer;
   }
+
+  .no-user{
+    padding-bottom: 5px;
+    width: 100px !important;
+  }
+
 
   .profile_dropdown__wrapper {
     background-color: #fff;
@@ -19,7 +26,7 @@
   .profile_dropdown__item {
     cursor: pointer;
     font-family: 'DarkerGrotesque', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 600;
     text-decoration: unset;
     color: #000;
@@ -44,6 +51,7 @@
     padding: 10px;
     color: #fff;
     font-weight: 600;
+    font-family: 'DarkerGrotesque', sans-serif;
   }
 
   .profile_dropdown__logout:hover {

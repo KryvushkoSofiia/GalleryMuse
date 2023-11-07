@@ -68,6 +68,7 @@ export const createGalleryThunk = (galleryData) => async (dispatch) => {
         const newGallery = await response.json();
         console.log("New gallery from thunk", newGallery);
         dispatch(createGallery(newGallery));
+        return newGallery;
     } else {
         throw new Error('Failed to create gallery');
     }
