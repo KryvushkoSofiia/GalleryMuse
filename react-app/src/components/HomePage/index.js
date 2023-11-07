@@ -49,7 +49,7 @@ const GalleryList = () => {
 
             return (
               <li key={gallery.id} className='home-page__gallery'>
-                <NavLink to={`/galleries/${gallery.id}`} activeClassName="active-link">
+                <NavLink to={`/galleries/${gallery.id}`} className="active-link">
                   <h2>{gallery.title}</h2>
                   <img src={gallery.gallery_img} alt={gallery.title} />
                   <p>{gallery.description}</p>
@@ -58,9 +58,9 @@ const GalleryList = () => {
                 {currentUser ? (
                   // If the user is logged in, display the buttons
                   isFavorite ? (
-                    <button onClick={() => addToFavorites(gallery.id)}>Remove from Favorites</button>
+                    <button className='remove-favorite' onClick={() => addToFavorites(gallery.id)}>Remove from Favorites</button>
                   ) : (
-                    <button onClick={() => addToFavorites(gallery.id)}>Add to Favorites</button>
+                    <button className='add-favorite' onClick={() => addToFavorites(gallery.id)}>Add to Favorites</button>
                   )
                 ) : null}
               </li>
