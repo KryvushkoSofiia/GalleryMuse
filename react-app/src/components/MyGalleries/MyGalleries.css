@@ -1,4 +1,87 @@
-.my-galleries__wrapper{
+
+.my-galleries__wrapper {
     margin: 0 auto;
     max-width: 1440px;
-}
+    padding: 20px;
+  }
+  
+  .my-galleries__header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .my-galleries_list__wrapper {
+    /* display: flex;
+    flex-wrap: wrap; */
+    gap: 20px;
+  }
+
+  .my-galleries_list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+  }
+  
+  .my-galleries_list__item {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
+  .my-galleries_list__item-desc > *{
+    color: #000;
+    margin: 5px 0;
+    word-wrap: break-word;
+  }
+  
+  .my-galleries_list__item img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+  
+  .my-galleries_list__item h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    font-family: 'DarkerGrotesque', sans-serif;
+    word-wrap: break-word;
+  }
+  
+  .gallery-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .gallery-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .update-gallery-button,
+  .delete-button {
+    font-family: 'DarkerGrotesque', sans-serif;
+    font-size: 18px;
+    background-color:#264813;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .update-gallery-button:hover,
+  .delete-button:hover {
+    background-color: #460b0b;
+  }
+  

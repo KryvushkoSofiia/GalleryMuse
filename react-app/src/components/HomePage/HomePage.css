@@ -35,6 +35,7 @@
 
 .active-link>* {
   margin: 10px 0;
+  word-wrap: break-word;
 }
 
 .active-link h2 {

@@ -43,10 +43,10 @@ const MyGalleries = () => {
                 <>
                     <h1 className='my-galleries__header'>My Galleries</h1>
                     <div className='my-galleries_list__wrapper'>
-                        <ul>
+                        <ul className='my-galleries_list'>
                             {myGalleries.map((gallery) => (
                                 <li key={gallery.id} className='my-galleries_list__item'>
-                                    <NavLink to={`/galleries/${gallery.id}`} className="">
+                                    <NavLink to={`/galleries/${gallery.id}`} className="my-galleries_list__item-desc">
                                         <h2 className='title'>{gallery.title}</h2>
                                         <img src={gallery.gallery_img} alt={gallery.title} />
                                         <p>{gallery.description}</p>
