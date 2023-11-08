@@ -16,7 +16,7 @@ const GalleryDetail = () => {
   // Set the initial value of isFavorite based on whether the gallery exists in galleryFavorites
   // console.log("galleries favorites", galleryFavorites);
 
-  const initialIsFavorite = galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
+  const initialIsFavorite = galleryFavorites.some((favorite) => favorite.gallery_id === galleryId);
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   console.log("initial is fav", initialIsFavorite);
 
