@@ -21,7 +21,6 @@ const MyGalleries = () => {
         Object.values(state.galleries.galleries)
     );
     
-    // Check if currentUser is available before filtering
     const myGalleries = currentUser ? galleries.filter((gallery) => gallery.owner_id === currentUser.id) : [];
 
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);

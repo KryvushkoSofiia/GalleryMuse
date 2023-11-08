@@ -50,7 +50,7 @@ const EditGallery = () => {
     if (name === "status") {
       setFormData({
         ...formData,
-        [name]: value === "true", // Check if value is "true"
+        [name]: value === "true",
       });
     } else {
       setFormData({
@@ -91,15 +91,15 @@ const EditGallery = () => {
     const updatedGallery = await dispatch(
       updateGalleryThunk(formData, galleryId)
     );
-    history.push('/my-galleries')
-    // console.log("UpdateGallery", updatedGallery);
 
-    // if (updatedGallery) {
-    //   console.log('Redirecting to gallery page');
-    //   history.push(`/galleries/${galleryId}`);
-    // } else {
-    //   setErrors(updatedGallery);
-    // }
+    console.log("UpdateGallery", updatedGallery);
+
+    if (updatedGallery) {
+      // console.log('Redirecting to gallery page');
+      history.push('/my-galleries')
+    } else {
+      setErrors(updatedGallery);
+    }
   };
 
   return (
