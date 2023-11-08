@@ -86,8 +86,9 @@ export const updateGalleryThunk = (galleryData, galleryId) => async (dispatch) =
 
     if (response.ok) {
         const updatedGallery = await response.json();
-        console.log("Updated gallery data:", updatedGallery);
+        // console.log("Updated gallery data:", updatedGallery);
         dispatch(updateGallery(updatedGallery, galleryId));
+        return updatedGallery;
     } else {
         console.error('Failed to update gallery');
         console.error(await response.text());

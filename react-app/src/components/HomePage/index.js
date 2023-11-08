@@ -19,7 +19,7 @@ const GalleryList = () => {
   };
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [locationSearchTerm, setLocationSearchTerm] = useState(''); // New state for location search
+  const [locationSearchTerm, setLocationSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +82,6 @@ const GalleryList = () => {
                   <p>Location: {gallery.location}</p>
                 </NavLink>
                 {currentUser ? (
-                  // If the user is logged in, display the buttons
                   isFavorite ? (
                     <button className='remove-favorite' onClick={() => addToFavorites(gallery.id)}>Remove from Favorites</button>
                   ) : (

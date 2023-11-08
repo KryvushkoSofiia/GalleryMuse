@@ -13,12 +13,10 @@ const GalleryDetail = () => {
   const currentUser = useSelector((state) => state.session.user);
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
 
-  // Set the initial value of isFavorite based on whether the gallery exists in galleryFavorites
-  // console.log("galleries favorites", galleryFavorites);
 
   const initialIsFavorite = galleryFavorites.some((favorite) => favorite.gallery_id === galleryId);
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
-  console.log("initial is fav", initialIsFavorite);
+  // console.log("initial is fav", initialIsFavorite);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,10 +32,10 @@ const GalleryDetail = () => {
 
   const addToFavorites = async () => {
     await dispatch(addToFavoritesThunk(galleryId));
-    // Update isFavorite after adding or removing from favorites
-    console.log("Gallery id from addTofav", galleryId);
+    
+    // console.log("Gallery id from addTofav", galleryId);
     const updatedIsFavorite = !isFavorite;
-    console.log("updatedIsFavorite", updatedIsFavorite);
+    // console.log("updatedIsFavorite", updatedIsFavorite);
     setIsFavorite(updatedIsFavorite);
   };
 
@@ -61,7 +59,6 @@ const GalleryDetail = () => {
       </div>
 
       {currentUser ? (
-        // If the user is logged in, display the buttons
 
         isFavorite ? (
           <button className='remove-favorite' onClick={() => addToFavorites(gallery.id)}>Remove from Favorites</button>
