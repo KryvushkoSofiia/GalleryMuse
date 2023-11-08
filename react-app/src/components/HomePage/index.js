@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -18,6 +18,9 @@ const GalleryList = () => {
     dispatch(addToFavoritesThunk(galleryId));
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [locationSearchTerm, setLocationSearchTerm] = useState(''); // New state for location search
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,20 +34,43 @@ const GalleryList = () => {
     fetchData();
   }, [dispatch, galleryFavorites.length]);
 
-  console.log('Redux State:', galleries);
+  // Filter galleries by location based on locationSearchTerm
+  const filteredGalleries = galleries.filter((gallery) => {
+    return (
+      gallery.location.toLowerCase().includes(locationSearchTerm.toLowerCase()) &&
+      gallery.title.toLowerCase().includes(searchTerm.toLowerCase()) // Also filter by title
+    );
+  });
 
   return (
     <>
-      <div className='home-page__banner'>
-        Banner
+      <>
+        <div className='home-page__banner'>
+          Banner
+        </div>
         <a href='#all-galleries'>
           <img id='arrow' src={Arrow} alt='Arrow' className='svg-image' />
         </a>
-      </div>
+      </>
       <div className='home-page__wrapper'>
         <h1 id='all-galleries'>All Galleries</h1>
+        <div>
+          <input
+            type="text"
+            placeholder="Search by Location"
+            value={locationSearchTerm}
+            onChange={(e) => setLocationSearchTerm(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Search by Title"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <ul className='home-page_galleries__wrapper'>
-          {galleries.map((gallery) => {
+
+          {filteredGalleries.map((gallery) => {
             const isFavorite = galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
 
             return (

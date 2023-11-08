@@ -1,9 +1,10 @@
 .home-page__wrapper {
   margin: 0 auto;
   max-width: 1440px;
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between; */
+  height: 100vh;
 }
 
 .home-page_galleries__wrapper {
@@ -88,9 +89,24 @@
 }
 
 #all-galleries {
+  display: block;
   font-size: 28px;
   font-family: 'DarkerGrotesque', sans-serif;
   margin: 20px 10px;
+}
+
+.all-galleries-content{
+  display: flex;
+  flex-direction: column;
+}
+
+.no-galleries-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100px);
+  font-size: 20px;
+  color: #999;
 }
 
 @media(prefers-reduced-motion: no-preference) {
