@@ -66,7 +66,7 @@ const GalleryFavoritesList = () => {
     const handleDelete = async (recordId) => {
         try {
             await dispatch(addToFavoritesThunk(recordId));
-            
+
             await dispatch(getGalleryFavoritesThunk());
         } catch (error) {
             console.error('Error removing favorite gallery:', error);
@@ -103,11 +103,12 @@ const GalleryFavoritesList = () => {
                                                 )}
                                                 {/* <p>Gallery id: {favorite.gallery_id}</p> */}
                                             </NavLink>
-
-                                            <button onClick={() => handleStatusChange(favorite.id, favorite.gallery_id)}>
-                                                {currentStatus[favorite.gallery_id] ? "Visited" : "Not Visited"}
-                                            </button>
-                                            <button onClick={() => handleDelete(favorite.gallery_id)}>Delete</button>
+                                            <div className='favorite-galleries_buttons'>
+                                                <button onClick={() => handleStatusChange(favorite.id, favorite.gallery_id)}>
+                                                    {currentStatus[favorite.gallery_id] ? "Visited" : "Not Visited"}
+                                                </button>
+                                                <button onClick={() => handleDelete(favorite.gallery_id)}>Delete</button>
+                                            </div>
                                         </li>
                                     );
                                 })}

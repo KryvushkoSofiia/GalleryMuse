@@ -1,0 +1,39 @@
+.gallery-details__wrapper{
+    margin: 0 auto;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gallery-details_title{
+    font-family: 'DarkerGrotesque', sans-serif;
+    font-size: 28px;
+    text-align: center;
+}
+  
+  .gallery-details_title {
+    font-size: 24px;
+  }
+  
+  .gallery-image img {
+    width:1024px;
+    max-width: 1440px;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+  }
+  
+  .gallery-info {
+    text-align: center;
+  }
+  
+  .gallery-status {
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  .gallery-status p {
+    margin: 5px 0;
+  }
+  
