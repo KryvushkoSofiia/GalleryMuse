@@ -14,7 +14,7 @@ const GalleryDetail = () => {
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
 
   const getInitialIsFavorite = () => {
-    return galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
+    return gallery?.id && galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
   };
 
   const [isFavorite, setIsFavorite] = useState(getInitialIsFavorite());
