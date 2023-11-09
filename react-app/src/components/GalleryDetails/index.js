@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGalleryThunk } from '../../store/galleries';
-import { addToFavoritesThunk, getGalleryFavoritesThunk } from '../../store/galleries_favorites'; // Import the necessary action
+import { addToFavoritesThunk, getGalleryFavoritesThunk } from '../../store/galleries_favorites';
 import { useParams } from 'react-router-dom';
 
 import './GalleryDetails.css';
@@ -13,12 +13,11 @@ const GalleryDetail = () => {
   const currentUser = useSelector((state) => state.session.user);
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
 
-  // Set the initial value of isFavorite based on whether the gallery exists in galleryFavorites
-  // console.log("galleries favorites", galleryFavorites);
+  const getInitialIsFavorite = () => {
+    return galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
+  };
 
-  const initialIsFavorite = galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
-  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
-  console.log("initial is fav", initialIsFavorite);
+  const [isFavorite, setIsFavorite] = useState(getInitialIsFavorite());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +31,14 @@ const GalleryDetail = () => {
     fetchData();
   }, [dispatch, galleryId, galleryFavorites.length]);
 
+  useEffect(() => {
+    // Update isFavorite when galleryFavorites change
+    setIsFavorite(getInitialIsFavorite());
+  }, [galleryFavorites, galleryId]);
+
   const addToFavorites = async () => {
     await dispatch(addToFavoritesThunk(galleryId));
-    // Update isFavorite after adding or removing from favorites
-    console.log("Gallery id from addTofav", galleryId);
-    const updatedIsFavorite = !isFavorite;
-    console.log("updatedIsFavorite", updatedIsFavorite);
-    setIsFavorite(updatedIsFavorite);
+    setIsFavorite(true);
   };
 
   if (!gallery) {
@@ -62,11 +62,10 @@ const GalleryDetail = () => {
 
       {currentUser ? (
         // If the user is logged in, display the buttons
-
         isFavorite ? (
-          <button className='remove-favorite' onClick={() => addToFavorites(gallery.id)}>Remove from Favorites</button>
+          <button className='remove-favorite' onClick={addToFavorites}>Remove from Favorites</button>
         ) : (
-          <button className='add-favorite' onClick={() => addToFavorites(gallery.id)}>Add to Favorites</button>
+          <button className='add-favorite' onClick={addToFavorites}>Add to Favorites</button>
         )
       ) : null}
     </div>
