@@ -17,7 +17,6 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.String(255), nullable=False)
     created_at = db.Column(DateTime, default=func.now())
 
     galleries = db.relationship(
@@ -46,5 +45,4 @@ class User(db.Model, UserMixin):
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "profile_picture": self.profile_picture,
         }
