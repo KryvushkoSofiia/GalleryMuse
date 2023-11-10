@@ -36,7 +36,7 @@ def upload_file_to_s3(file, acl="public-read"):
         return {"errors": str(e)}
 
     # Return the S3 location directly
-    return {"url":f"{S3_LOCATION}{file.filename}"}
+    return {"gallery_img":f"{S3_LOCATION}{file.filename}"}
 
 
 def remove_file_from_s3(image_url):
