@@ -4,6 +4,8 @@ from flask_login import current_user, login_required
 
 gallery_favorite_routes = Blueprint('galleries_favorites', __name__)
 
+
+
 @gallery_favorite_routes.route('/', methods=['GET'])
 # @login_required
 def get_gallery_favorites():
@@ -14,6 +16,8 @@ def get_gallery_favorites():
         response = [favorite.to_dict() for favorite in gallery_favorites]
     return {'galleries_favorites': response}
     
+
+
 @gallery_favorite_routes.route('/<int:gallery_id>', methods=['POST'])
 @login_required
 def add_gallery_to_favorites(gallery_id):
@@ -32,6 +36,8 @@ def add_gallery_to_favorites(gallery_id):
         db.session.add(new_favorite)
         db.session.commit()
         return {'message': 'Gallery added to favorites'}, 201
+
+
 
 @gallery_favorite_routes.route('/<int:favorite_id>', methods=['PUT'])
 @login_required

@@ -56,12 +56,14 @@ export const getGalleryThunk = (galleryId) => async (dispatch) => {
 };
 
 export const createGalleryThunk = (galleryData) => async (dispatch) => {
-    const response = await fetch('api/galleries/new', {
+    console.log("New galleryData from ", galleryData);
+    const response = await fetch('/api/galleries/new', {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(galleryData),
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(galleryData),
+        body: galleryData
     });
 
     if (response.ok) {
