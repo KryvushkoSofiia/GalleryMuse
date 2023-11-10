@@ -44,11 +44,11 @@ def create_gallery():
         upload = upload_file_to_s3(image)
 
         print("*******************UPLOAD", upload)
-        image_url = upload['url']
+        image_url = upload.get('url')
 
 
-        if 'url' not in upload:
-            return "Error gallery_image"
+        if image_url is None:
+                return "Error: 'url' key not present in the upload dictionary"
         gallery = Gallery(
             owner_id=current_user.id,
             title=form.data['title'],
