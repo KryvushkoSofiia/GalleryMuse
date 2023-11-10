@@ -2,7 +2,6 @@ import boto3
 import botocore
 import os
 import uuid
-import io
 
 BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
@@ -23,9 +22,8 @@ def get_unique_filename(filename):
 
 def upload_file_to_s3(file, acl="public-read"):
     try:
-        file_content = file.read()
         s3.upload_fileobj(
-            io.BytesIO(file_content),
+            file,
             BUCKET_NAME,
             file.filename,
             ExtraArgs={
@@ -34,11 +32,11 @@ def upload_file_to_s3(file, acl="public-read"):
             }
         )
     except Exception as e:
-        # in case the S3 upload fails
+        # in case the your s3 upload fails
         return {"errors": str(e)}
 
     # Return the S3 location directly
-    return {"url": f"{S3_LOCATION}{file.filename}"}
+    return {"url":f"{S3_LOCATION}{file.filename}"}
 
 
 def remove_file_from_s3(image_url):
