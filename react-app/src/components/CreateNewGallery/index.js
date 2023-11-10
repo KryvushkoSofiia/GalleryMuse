@@ -17,7 +17,7 @@ const CreateNewGallery = () => {
         description: "",
         location: "",
         status: false,
-        gallery_img: "",
+        gallery_img: null,
     });
 
     const [errors, setErrors] = useState({});
@@ -29,6 +29,19 @@ const CreateNewGallery = () => {
             [name]: value,
         });
     };
+
+   
+    // Update handleFileChange to handle file input changes
+    // const handleFileChange = (e) => {
+    //     const file = e.target.files[0];
+    //     setFormData({
+    //         ...formData,
+    //         gallery_img: file,
+    //     });
+    // };
+
+
+    const [image, setImage] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,26 +60,48 @@ const CreateNewGallery = () => {
             newErrors.location = "Location is required and must be between 5 and 255 characters.";
         }
 
-        const validUrlEndings = [".jpg", ".jpeg", ".png"];
-        if (!formData.gallery_img || !validUrlEndings.some((ending) => formData.gallery_img.toLowerCase().endsWith(ending))) {
-            newErrors.gallery_img = "Image URL is required and must end in .jpg, .jpeg, or .png";
-        }
+        // const validUrlEndings = [".jpg", ".jpeg", ".png"];
+        // if (!formData.gallery_img || !validUrlEndings.some((ending) => formData.gallery_img.toLowerCase().endsWith(ending))) {
+        //     newErrors.gallery_img = "Image URL is required and must end in .jpg, .jpeg, or .png";
+        // }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
+            
         } else {
-            const createdGallery = await dispatch(createGalleryThunk(formData));
+            // const { name, value } = e.target;
+            // setFormData({
+            //     ...formData,
+            //     [name]: value,
+            // });
+           
+            console.log("Form data", formData);
+            const newFormData = new FormData();
+            newFormData.append("gallery_img", image);
+            newFormData.append("title", formData.title);
+            newFormData.append("description", formData.description);
+            newFormData.append("location", formData.location);
+            newFormData.append("status", formData.status);
+
+            console.log("new form gallery_img", newFormData.get("gallery_img"));
+            console.log("new form title",newFormData.get("title"));
+
+            console.log("image", image);
+          
+            const createdGallery = await dispatch(createGalleryThunk(newFormData));
             if (createdGallery) {
                 history.push(`/galleries/${createdGallery.id}`);
             } else {
                 console.log("Gallery creation failed");
             }
+
         }
     };
     return (
         <div className="create-gallery__wrapper">
             {currentUser ? (
-                <form onSubmit={handleSubmit} className="create-gallery-form">
+                <form onSubmit={handleSubmit} className="create-gallery-form"
+                    encType="multipart/form-data">
                     <div className="form-group">
                         <label htmlFor="title" className="label">Title:</label>
                         <input
@@ -122,14 +157,15 @@ const CreateNewGallery = () => {
                     <div className="form-group">
                         <label htmlFor="gallery_img" className="label">Gallery Image:</label>
                         <input
-                            type="text"
+                            type="file"
                             id="gallery_img"
                             name="gallery_img"
-                            value={formData.gallery_img}
-                            onChange={handleInputChange}
+                            accept="image/*"
+                            // value={formData.gallery_img}
+                            onChange={(e) => setImage(e.target.files[0])}
                             className="text-input"
                         />
-                        {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>}
+                        {/* {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>} */}
                     </div>
 
                     <button type="submit" className="submit-button">Submit</button>
