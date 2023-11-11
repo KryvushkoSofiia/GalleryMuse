@@ -30,7 +30,7 @@ const CreateNewGallery = () => {
         });
     };
 
-   
+
     // Update handleFileChange to handle file input changes
     // const handleFileChange = (e) => {
     //     const file = e.target.files[0];
@@ -42,6 +42,13 @@ const CreateNewGallery = () => {
 
 
     const [image, setImage] = useState(null);
+    
+    const ALLOWED_EXTENSIONS = ["pdf", "png", "jpg", "jpeg", "gif"];
+
+    const isAllowedExtension = (filename) => {
+        const ext = filename.split('.').pop();
+        return ALLOWED_EXTENSIONS.includes(ext.toLowerCase());
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,21 +67,22 @@ const CreateNewGallery = () => {
             newErrors.location = "Location is required and must be between 5 and 255 characters.";
         }
 
-        // const validUrlEndings = [".jpg", ".jpeg", ".png"];
-        // if (!formData.gallery_img || !validUrlEndings.some((ending) => formData.gallery_img.toLowerCase().endsWith(ending))) {
-        //     newErrors.gallery_img = "Image URL is required and must end in .jpg, .jpeg, or .png";
-        // }
+        if (!image) {
+            newErrors.gallery_img = "Gallery Image is required.";
+        } else if (!isAllowedExtension(image.name)) {
+            newErrors.gallery_img = "Invalid file format. Allowed formats: " + ALLOWED_EXTENSIONS.join(", ");
+        }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
-            
+
         } else {
             // const { name, value } = e.target;
             // setFormData({
             //     ...formData,
             //     [name]: value,
             // });
-           
+
             console.log("Form data", formData);
             const newFormData = new FormData();
             newFormData.append("gallery_img", image);
@@ -84,10 +92,10 @@ const CreateNewGallery = () => {
             newFormData.append("status", formData.status);
 
             console.log("new form gallery_img", newFormData.get("gallery_img"));
-            console.log("new form title",newFormData.get("title"));
+            console.log("new form title", newFormData.get("title"));
 
             console.log("image", image);
-          
+
             const createdGallery = await dispatch(createGalleryThunk(newFormData));
             if (createdGallery) {
                 history.push(`/galleries/${createdGallery.id}`);
@@ -165,7 +173,7 @@ const CreateNewGallery = () => {
                             onChange={(e) => setImage(e.target.files[0])}
                             className="text-input"
                         />
-                        {/* {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>} */}
+                        {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>}
                     </div>
 
                     <button type="submit" className="submit-button">Submit</button>
