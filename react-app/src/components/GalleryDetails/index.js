@@ -40,14 +40,17 @@ const GalleryDetail = () => {
       } else {
         await dispatch(addToFavoritesThunk(galleryId));
       }
-
+  
       // Fetch the gallery data again to get the updated information
       await dispatch(getGalleryThunk(galleryId));
-      setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     } catch (error) {
       console.error('Error adding/removing from favorites:', error);
     }
   };
+  
+  useEffect(() => {
+    setIsFavorite(getInitialIsFavorite());
+  }, [galleryId, galleryFavorites]);
 
   if (!gallery) {
     return <div>Loading...</div>;
