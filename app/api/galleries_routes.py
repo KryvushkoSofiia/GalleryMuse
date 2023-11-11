@@ -72,13 +72,19 @@ def update_gallery(galleryId):
 
     if form.validate_on_submit():
         print("Form is valid.")
+
+
         gallery_to_update = Gallery.query.get(galleryId)
 
-        uploaded_file = request.files['gallery_img']
+        # uploaded_file = request.files['gallery_img']
+        uploaded_file = request.files.get('gallery_img')
         if uploaded_file:
+            # remove_file_from_s3(gallery_to_update.gallery_img)
+            # file_url = upload_file_to_s3(uploaded_file)
+            # gallery_to_update.gallery_img = file_url
             remove_file_from_s3(gallery_to_update.gallery_img)
-            file_url = upload_file_to_s3(uploaded_file)
-            gallery_to_update.gallery_img = file_url
+            image_url = upload_file_to_s3(uploaded_file).get('url')
+            gallery_to_update.gallery_img = image_url
         # gallery_to_update.owner_id = int(current_user.id),
         print("*******CuRRent User*************",current_user.id) 
         gallery_to_update.title=form.data['title']

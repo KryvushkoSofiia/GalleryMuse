@@ -15,7 +15,7 @@ class Gallery(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     status = db.Column(db.Boolean)
-    gallery_img = db.Column(db.String(255), nullable=False)
+    gallery_img = db.Column(db.String(255))
     created_at = db.Column(DateTime, default=func.now())
     updated_at = db.Column(DateTime, default=func.now(), onupdate=func.now())
 

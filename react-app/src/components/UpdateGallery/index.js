@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Children } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateGalleryThunk, getGalleryThunk } from "../../store/galleries";
 
-
 import './UpdateGallery.css';
-
 
 const EditGallery = () => {
   const dispatch = useDispatch();
@@ -15,7 +13,6 @@ const EditGallery = () => {
   const currentUser = useSelector((state) => state.session.user);
 
   const [errors, setErrors] = useState({});
-
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -25,14 +22,12 @@ const EditGallery = () => {
   });
 
   const gallery = useSelector((state) => Object.values(state.galleries.singleGallery)[0]);
-  // console.log("Gallery data received:", gallery);
 
   useEffect(() => {
     dispatch(getGalleryThunk(galleryId));
   }, [dispatch, galleryId]);
 
   useEffect(() => {
-
     if (gallery && gallery.title) {
       setFormData({
         title: gallery.title,
@@ -43,7 +38,6 @@ const EditGallery = () => {
       });
     }
   }, [gallery]);
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,9 +54,19 @@ const EditGallery = () => {
     }
   };
 
+  const [image, setImage] = useState(formData.gallery_img);
+
+  const ALLOWED_EXTENSIONS = ["pdf", "png", "jpg", "jpeg", "gif"];
+
+  const isAllowedExtension = (filename) => {
+    const ext = filename.split('.').pop();
+    return ALLOWED_EXTENSIONS.includes(ext.toLowerCase());
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Image populated", formData.gallery_img);
 
     const newErrors = {};
 
@@ -78,29 +82,48 @@ const EditGallery = () => {
       newErrors.location = "Location is required and must be between 5 and 255 characters.";
     }
 
-    const validUrlEndings = [".jpg", ".jpeg", ".png"];
-    if (!formData.gallery_img || !validUrlEndings.some((ending) => formData.gallery_img.toLowerCase().endsWith(ending))) {
-      newErrors.gallery_img = "Image URL is required and must end in .jpg, .jpeg, or .png";
+    if (image && !isAllowedExtension(image.name)) {
+      newErrors.gallery_img = "Invalid file format. Allowed formats: " + ALLOWED_EXTENSIONS.join(", ");
     }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
-    }
-
-    const updatedGallery = await dispatch(
-      updateGalleryThunk(formData, galleryId)
-    );
-
-    console.log("UpdateGallery", updatedGallery);
-
-    if (updatedGallery) {
-      // console.log('Redirecting to gallery page');
-      history.push('/my-galleries')
     } else {
-      setErrors(updatedGallery);
+      const newFormData = new FormData();
+
+      if (image) {
+        newFormData.append("gallery_img", image);
+      } else {
+        // Only append the existing image if no new image is selected
+        newFormData.append("gallery_img", formData.gallery_img);
+      }
+
+      newFormData.append("title", formData.title);
+      newFormData.append("description", formData.description);
+      newFormData.append("location", formData.location);
+      newFormData.append("status", formData.status);
+
+      console.log("Form data handleSubmit", formData);
+      console.log("New uploaded image", image);
+      console.log("updatedFormData", newFormData);
+      console.log("new form gallery_img", newFormData.get("gallery_img"));
+      console.log("new form title", newFormData.get("title"));
+
+      const updatedGallery = await dispatch(updateGalleryThunk(newFormData, galleryId));
+      if (updatedGallery) {
+        history.push("/my-galleries");
+      } else {
+        setErrors(updatedGallery);
+        console.log("Gallery update failed");
+      }
+
+      // Reset the image state to null after submitting
+      setImage(null);
     }
   };
+
+
 
   return (
     <div className="edit-gallery__wrapper">
@@ -162,12 +185,22 @@ const EditGallery = () => {
 
             <div className="form-group">
               <label htmlFor="gallery_img" className="label">Gallery Image:</label>
+
+              {formData.gallery_img && (
+                <div>
+                  <a href={formData.gallery_img} target="_blank" rel="noopener noreferrer" download>
+                    Open Existing Image
+                  </a>
+                </div>
+              )}
+
               <input
-                type="text"
+                type="file"
                 id="gallery_img"
                 name="gallery_img"
-                value={formData.gallery_img}
-                onChange={handleInputChange}
+                accept="image/*"
+                // defaultValue={formData.gallery_img}
+                onChange={(e) => setImage(e.target.files[0])}
                 className="text-input"
               />
               {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>}

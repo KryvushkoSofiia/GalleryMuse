@@ -78,12 +78,14 @@ export const createGalleryThunk = (galleryData) => async (dispatch) => {
 };
 
 export const updateGalleryThunk = (galleryData, galleryId) => async (dispatch) => {
+    console.log("Updated galleryData", galleryData);
     const response = await fetch(`/api/galleries/update/${galleryId}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(galleryData),
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(galleryData),
+        body: galleryData
     });
 
     if (response.ok) {
