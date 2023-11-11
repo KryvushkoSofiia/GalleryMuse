@@ -10,7 +10,6 @@ function SignupFormModal() {
 	const [username, setUsername] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [profilePicture, setProfilePicture] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState({});
@@ -19,11 +18,6 @@ function SignupFormModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const newErrors = {};
-
-		const validUrlEndings = [".jpg", ".jpeg", ".png"];
-		if (!profilePicture || !validUrlEndings.some((ending) => profilePicture.toLowerCase().endsWith(ending))) {
-			newErrors.profilePicture = "Profile Picture URL is required and must end in .jpg, .jpeg, or .png";
-		}
 
 		if (password !== confirmPassword) {
 			newErrors.confirmPassword = "Confirm Password field must be the same as the Password field";
@@ -48,7 +42,7 @@ function SignupFormModal() {
 		setErrors(newErrors);
 
 		if (Object.keys(newErrors).length === 0) {
-			const data = await dispatch(signUp(username, email, firstName, lastName, profilePicture, password));
+			const data = await dispatch(signUp(username, email, firstName, lastName, password));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -103,17 +97,6 @@ function SignupFormModal() {
 						/>
 					</label>
 					{errors.lastName && <span className="error">{errors.lastName}</span>}
-					<label className="input-label">
-						Profile Picture
-						<input
-							type="text"
-							value={profilePicture}
-							onChange={(e) => setProfilePicture(e.target.value)}
-							required
-							className="input-field"
-						/>
-					</label>
-					{errors.profilePicture && <span className="error">{errors.profilePicture}</span>}
 					<label>
 						Password
 						<input
