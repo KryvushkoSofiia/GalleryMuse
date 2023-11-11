@@ -25,7 +25,6 @@ const GalleryDetail = () => {
         dispatch(getGalleryThunk(galleryId));
         setIsFavorite(getInitialIsFavorite());
         await dispatch(getGalleryFavoritesThunk());
-       
       } catch (error) {
         console.error('Error fetching gallery:', error);
       }
@@ -40,14 +39,17 @@ const GalleryDetail = () => {
       } else {
         await dispatch(addToFavoritesThunk(galleryId));
       }
-  
+
       // Fetch the gallery data again to get the updated information
       await dispatch(getGalleryThunk(galleryId));
+      await dispatch(getGalleryFavoritesThunk()); // Update favorites state
+
+      setIsFavorite(!isFavorite); // Update local state
     } catch (error) {
       console.error('Error adding/removing from favorites:', error);
     }
   };
-  
+
   useEffect(() => {
     setIsFavorite(getInitialIsFavorite());
   }, [galleryId, galleryFavorites]);
@@ -72,11 +74,9 @@ const GalleryDetail = () => {
       </div>
 
       {currentUser ? (
-        isFavorite ? (
-          <button className='remove-favorite' onClick={addRemoveFavorites}>Remove from Favorites</button>
-        ) : (
-          <button className='add-favorite' onClick={addRemoveFavorites}>Add to Favorites</button>
-        )
+        <button className={isFavorite ? 'remove-favorite' : 'add-favorite'} onClick={addRemoveFavorites}>
+          {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        </button>
       ) : null}
     </div>
   );
