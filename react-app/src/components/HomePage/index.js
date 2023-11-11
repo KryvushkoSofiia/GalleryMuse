@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { getGalleriesThunk } from '../../store/galleries';
-import { addToFavoritesThunk, getGalleryFavoritesThunk } from '../../store/galleries_favorites';
+import { addToFavoritesThunk, getGalleryFavoritesThunk, removeFromFavoritesThunk } from '../../store/galleries_favorites';
 
 import './HomePage.css';
 import Arrow from './Arrow.svg';
@@ -14,8 +14,22 @@ const GalleryList = () => {
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
   const currentUser = useSelector((state) => state.session.user);
 
-  const addToFavorites = (galleryId) => {
-    dispatch(addToFavoritesThunk(galleryId));
+  const addToFavorites = async (galleryId) => {
+    try {
+      await dispatch(addToFavoritesThunk(galleryId));
+      await dispatch(getGalleryFavoritesThunk());
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+    }
+  };
+
+  const removeFromFavorites = async (galleryId) => {
+    try {
+      await dispatch(removeFromFavoritesThunk(galleryId));
+      await dispatch(getGalleryFavoritesThunk());
+    } catch (error) {
+      console.error('Error removing from favorites:', error);
+    }
   };
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,14 +58,12 @@ const GalleryList = () => {
 
   return (
     <>
-      <>
-        <div className='home-page__banner'>
-          Banner
-        </div>
-        <a href='#all-galleries'>
-          <img id='arrow' src={Arrow} alt='Arrow' className='svg-image' />
-        </a>
-      </>
+      <div className='home-page__banner'>
+        Banner
+      </div>
+      <a href='#all-galleries'>
+        <img id='arrow' src={Arrow} alt='Arrow' className='svg-image' />
+      </a>
       <div className='home-page__wrapper'>
         <h1 id='all-galleries'>All Galleries</h1>
         <div>
@@ -69,7 +81,6 @@ const GalleryList = () => {
           />
         </div>
         <ul className='home-page_galleries__wrapper'>
-
           {filteredGalleries.map((gallery) => {
             const isFavorite = galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
 
@@ -83,7 +94,7 @@ const GalleryList = () => {
                 </NavLink>
                 {currentUser ? (
                   isFavorite ? (
-                    <button className='remove-favorite' onClick={() => addToFavorites(gallery.id)}>Remove from Favorites</button>
+                    <button className='remove-favorite' onClick={() => removeFromFavorites(gallery.id)}>Remove from Favorites</button>
                   ) : (
                     <button className='add-favorite' onClick={() => addToFavorites(gallery.id)}>Add to Favorites</button>
                   )
