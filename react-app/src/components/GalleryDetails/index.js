@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGalleryThunk } from '../../store/galleries';
-import { addToFavoritesThunk, getGalleryFavoritesThunk } from '../../store/galleries_favorites';
+import { addToFavoritesThunk, getGalleryFavoritesThunk, removeFromFavoritesThunk } from '../../store/galleries_favorites';
 import { useParams } from 'react-router-dom';
 
 import './GalleryDetails.css';
@@ -14,7 +14,7 @@ const GalleryDetail = () => {
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
 
   const getInitialIsFavorite = () => {
-    return gallery?.id && galleryFavorites.some((favorite) => favorite.gallery_id === gallery.id);
+    return gallery?.id && galleryFavorites?.some((favorite) => favorite.gallery_id === gallery.id);
   };
 
   const [isFavorite, setIsFavorite] = useState(getInitialIsFavorite());
@@ -22,8 +22,10 @@ const GalleryDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(getGalleryThunk(galleryId));
+        dispatch(getGalleryThunk(galleryId));
+        setIsFavorite(getInitialIsFavorite());
         await dispatch(getGalleryFavoritesThunk());
+       
       } catch (error) {
         console.error('Error fetching gallery:', error);
       }
@@ -31,14 +33,20 @@ const GalleryDetail = () => {
     fetchData();
   }, [dispatch, galleryId, galleryFavorites.length]);
 
-  useEffect(() => {
-    // Update isFavorite when galleryFavorites change
-    setIsFavorite(getInitialIsFavorite());
-  }, [galleryFavorites, galleryId]);
+  const addRemoveFavorites = async () => {
+    try {
+      if (isFavorite) {
+        await dispatch(removeFromFavoritesThunk(galleryId));
+      } else {
+        await dispatch(addToFavoritesThunk(galleryId));
+      }
 
-  const addToFavorites = async () => {
-    await dispatch(addToFavoritesThunk(galleryId));
-    setIsFavorite(true);
+      // Fetch the gallery data again to get the updated information
+      await dispatch(getGalleryThunk(galleryId));
+      setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+    } catch (error) {
+      console.error('Error adding/removing from favorites:', error);
+    }
   };
 
   if (!gallery) {
@@ -61,11 +69,10 @@ const GalleryDetail = () => {
       </div>
 
       {currentUser ? (
-        // If the user is logged in, display the buttons
         isFavorite ? (
-          <button className='remove-favorite' onClick={addToFavorites}>Remove from Favorites</button>
+          <button className='remove-favorite' onClick={addRemoveFavorites}>Remove from Favorites</button>
         ) : (
-          <button className='add-favorite' onClick={addToFavorites}>Add to Favorites</button>
+          <button className='add-favorite' onClick={addRemoveFavorites}>Add to Favorites</button>
         )
       ) : null}
     </div>

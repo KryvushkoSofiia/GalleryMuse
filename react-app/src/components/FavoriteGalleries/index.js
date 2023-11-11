@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGalleryFavoritesThunk, addToFavoritesThunk, updateFavoriteGalleryThunk } from '../../store/galleries_favorites';
+import { getGalleryFavoritesThunk, removeFromFavoritesThunk, updateFavoriteGalleryThunk } from '../../store/galleries_favorites';
 import { getGalleriesThunk } from '../../store/galleries';
 import { NavLink } from 'react-router-dom';
 
@@ -43,7 +43,6 @@ const GalleryFavoritesList = () => {
             fetchData();
         }
     }, [dispatch, loading, galleries]);
-    console.log("fav length", galleryFavorites.length);
 
     const handleStatusChange = async (galleryId, gallery_id) => {
         try {
@@ -63,10 +62,9 @@ const GalleryFavoritesList = () => {
         }
     };
 
-    const handleDelete = async (recordId) => {
+    const handleDelete = async (galleryId) => {
         try {
-            await dispatch(addToFavoritesThunk(recordId));
-
+            await dispatch(removeFromFavoritesThunk(galleryId));
             await dispatch(getGalleryFavoritesThunk());
         } catch (error) {
             console.error('Error removing favorite gallery:', error);

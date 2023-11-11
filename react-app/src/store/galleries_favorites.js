@@ -1,5 +1,6 @@
 const READ_GALLERY_FAVORITES = 'galleryFavorites/READ_GALLERY_FAVORITES';
 const ADD_TO_FAVORITES = 'galleryFavorites/ADD_TO_FAVORITES';
+const REMOVE_FROM_FAVORITES = 'galleryFavorites/REMOVE_FROM_FAVORITES';
 const UPDATE_GALLERY_STATUS = 'galleryFavorites/UPDATE_GALLERY_STATUS';
 
 const readGalleryFavorites = (galleryFavorites) => ({
@@ -9,6 +10,11 @@ const readGalleryFavorites = (galleryFavorites) => ({
 
 const addToFavorites = (galleryId) => ({
   type: ADD_TO_FAVORITES,
+  galleryId,
+});
+
+const removeFromFavorites = (galleryId) => ({
+  type: REMOVE_FROM_FAVORITES,
   galleryId,
 });
 
@@ -51,6 +57,26 @@ export const addToFavoritesThunk = (galleryId) => async (dispatch) => {
   }
 };
 
+
+export const removeFromFavoritesThunk = (galleryId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/galleries_favorites/${galleryId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      dispatch(removeFromFavorites(galleryId));
+    } else {
+      throw new Error('Failed to remove gallery from favorites');
+    }
+  } catch (error) {
+    console.error('Error in removeFromFavoritesThunk:', error);
+    throw error;
+  }
+};
+
+
+
 export const updateFavoriteGalleryThunk = (galleryId, newStatus) => async (dispatch) => {
   try {
     const response = await fetch(`/api/galleries_favorites/${galleryId}`, {
@@ -88,6 +114,13 @@ const galleryFavoritesReducer = (state = initialState, action) => {
       return {
         ...state,
         galleryFavorites: [...state.galleryFavorites, action.galleryId],
+      };
+    case REMOVE_FROM_FAVORITES:
+      return {
+        ...state,
+        galleryFavorites: state.galleryFavorites.filter(
+          (gallery) => gallery.id !== action.galleryId
+        ),
       };
     case UPDATE_GALLERY_STATUS:
       return {
