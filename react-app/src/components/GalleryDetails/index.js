@@ -39,11 +39,11 @@ const GalleryDetail = () => {
       } else {
         await dispatch(addToFavoritesThunk(galleryId));
       }
-
+  
       // Fetch the gallery data again to get the updated information
       await dispatch(getGalleryThunk(galleryId));
       await dispatch(getGalleryFavoritesThunk()); // Update favorites state
-
+  
       setIsFavorite(!isFavorite); // Update local state
     } catch (error) {
       console.error('Error adding/removing from favorites:', error);

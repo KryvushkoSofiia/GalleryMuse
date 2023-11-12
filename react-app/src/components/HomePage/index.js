@@ -14,6 +14,36 @@ const GalleryList = () => {
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
   const currentUser = useSelector((state) => state.session.user);
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [locationSearchTerm, setLocationSearchTerm] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(getGalleriesThunk());
+        await dispatch(getGalleryFavoritesThunk());
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch, galleryFavorites.length, currentUser]); // Include currentUser in the dependency array
+
+  // Reset state when user changes
+  useEffect(() => {
+    setSearchTerm('');
+    setLocationSearchTerm('');
+  }, [currentUser]);
+
+  // Filter galleries by location based on locationSearchTerm
+  const filteredGalleries = galleries.filter((gallery) => {
+    return (
+      gallery.location.toLowerCase().includes(locationSearchTerm.toLowerCase()) &&
+      gallery.title.toLowerCase().includes(searchTerm.toLowerCase()) // Also filter by title
+    );
+  });
+
   const addToFavorites = async (galleryId) => {
     try {
       await dispatch(addToFavoritesThunk(galleryId));
@@ -32,35 +62,24 @@ const GalleryList = () => {
     }
   };
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [locationSearchTerm, setLocationSearchTerm] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(getGalleriesThunk());
-        await dispatch(getGalleryFavoritesThunk());
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch, galleryFavorites.length]);
-
-  // Filter galleries by location based on locationSearchTerm
-  const filteredGalleries = galleries.filter((gallery) => {
-    return (
-      gallery.location.toLowerCase().includes(locationSearchTerm.toLowerCase()) &&
-      gallery.title.toLowerCase().includes(searchTerm.toLowerCase()) // Also filter by title
-    );
-  });
-
   return (
     <>
       <div className='home-page__banner'>
-        Banner
-      </div>
+        <div className="wrapper">
+          <div className='text-popup-left'>
+            Unleash the beauty of art and culture
+          </div>
+    
+          <div className='text-popup-right'>
+            Explore galleries you love,  share your favorites with the world
+          </div>
+        </div>
+        <div className='art-description'>
+        The Dessert: Harmony in Red by Henri Matisse (also known as Red Room or Harmony in Red), 1908, Hermitage Museum
+        </div>
+
+
+      </div >
       <a href='#all-galleries'>
         <img id='arrow' src={Arrow} alt='Arrow' className='svg-image' />
       </a>
