@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGalleryFavoritesThunk, addToFavoritesThunk, updateFavoriteGalleryThunk } from '../../store/galleries_favorites';
+import { getGalleryFavoritesThunk, addToFavoritesThunk, updateFavoriteGalleryThunk, removeFromFavoritesThunk } from '../../store/galleries_favorites';
 import { getGalleriesThunk } from '../../store/galleries';
 import { NavLink } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const GalleryFavoritesList = () => {
     const galleries = useSelector((state) => Object.values(state.galleries.galleries));
 
     const findGalleryById = (galleryId) => {
-        return galleries.find(gallery => gallery.id === galleryId);
+        return galleries?.find(gallery => gallery.id === galleryId);
     };
 
     useEffect(() => {
@@ -65,13 +65,12 @@ const GalleryFavoritesList = () => {
 
     const handleDelete = async (recordId) => {
         try {
-            await dispatch(addToFavoritesThunk(recordId));
-
-            await dispatch(getGalleryFavoritesThunk());
+          await dispatch(removeFromFavoritesThunk(recordId));
+          await dispatch(getGalleryFavoritesThunk());
         } catch (error) {
-            console.error('Error removing favorite gallery:', error);
+          console.error('Error removing favorite gallery:', error);
         }
-    }
+      };
 
     return (
         <div className='background'>
