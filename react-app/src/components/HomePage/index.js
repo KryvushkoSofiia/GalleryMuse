@@ -66,16 +66,18 @@ const GalleryList = () => {
       </a>
       <div className='home-page__wrapper'>
         <h1 id='all-galleries'>All Galleries</h1>
-        <div>
+        <div className='home-page_search__wrapper'>
           <input
             type="text"
             placeholder="Search by Location"
+            className='search'
             value={locationSearchTerm}
             onChange={(e) => setLocationSearchTerm(e.target.value)}
           />
           <input
             type="text"
             placeholder="Search by Title"
+            className='search'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
