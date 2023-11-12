@@ -18,6 +18,25 @@ def get_gallery_favorites():
     
 
 
+# @gallery_favorite_routes.route('/<int:gallery_id>', methods=['POST'])
+# @login_required
+# def add_gallery_to_favorites(gallery_id):
+#     user_id = current_user.id
+
+#     # Check if the gallery is not already in the user's favorites
+#     existing_favorite = GalleryFavorite.query.filter_by(user_id=user_id, gallery_id=gallery_id).first()
+#     if existing_favorite:
+#         # Gallery is already in favorites, so remove it
+#         db.session.delete(existing_favorite)
+#         db.session.commit()
+#         return {'message': 'Gallery removed from favorites'}, 200
+#     else:
+#         # Gallery is not in favorites, add it
+#         new_favorite = GalleryFavorite(user_id=user_id, gallery_id=gallery_id)
+#         db.session.add(new_favorite)
+#         db.session.commit()
+#         return {'message': 'Gallery added to favorites'}, 201
+
 @gallery_favorite_routes.route('/<int:gallery_id>', methods=['POST'])
 @login_required
 def add_gallery_to_favorites(gallery_id):
@@ -26,16 +45,29 @@ def add_gallery_to_favorites(gallery_id):
     # Check if the gallery is not already in the user's favorites
     existing_favorite = GalleryFavorite.query.filter_by(user_id=user_id, gallery_id=gallery_id).first()
     if existing_favorite:
-        # Gallery is already in favorites, so remove it
-        db.session.delete(existing_favorite)
-        db.session.commit()
-        return {'message': 'Gallery removed from favorites'}, 200
+        return {'message': 'Gallery already in favorites'}, 200
     else:
         # Gallery is not in favorites, add it
         new_favorite = GalleryFavorite(user_id=user_id, gallery_id=gallery_id)
         db.session.add(new_favorite)
         db.session.commit()
         return {'message': 'Gallery added to favorites'}, 201
+
+@gallery_favorite_routes.route('/<int:gallery_id>', methods=['DELETE'])
+@login_required
+def remove_gallery_from_favorites(gallery_id):
+    user_id = current_user.id
+
+    # Check if the gallery is in the user's favorites
+    existing_favorite = GalleryFavorite.query.filter_by(user_id=user_id, gallery_id=gallery_id).first()
+    if existing_favorite:
+        # Gallery is in favorites, so remove it
+        db.session.delete(existing_favorite)
+        db.session.commit()
+        return {'message': 'Gallery removed from favorites'}, 200
+    else:
+        return {'message': 'Gallery not in favorites'}, 200
+
 
 
 

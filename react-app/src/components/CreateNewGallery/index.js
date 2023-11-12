@@ -166,12 +166,12 @@ const CreateNewGallery = () => {
                         <label htmlFor="gallery_img" className="label">Gallery Image:</label>
                         <input
                             type="file"
+                            background="transparent"
                             id="gallery_img"
-                            name="gallery_img"
                             accept="image/*"
                             // value={formData.gallery_img}
                             onChange={(e) => setImage(e.target.files[0])}
-                            className="text-input"
+                            className="text-input custom-file-input"
                         />
                         {errors.gallery_img && <span className='error'>{errors.gallery_img}</span>}
                     </div>

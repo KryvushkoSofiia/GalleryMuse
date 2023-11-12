@@ -21,6 +21,7 @@
   
   .label {
     font-weight: bold;
+    
   }
   
   .text-input {
@@ -29,6 +30,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    color: #460b0b;
   }
   
   .textarea-input {
@@ -46,6 +48,12 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+   
+  }
+
+  #status{
+    margin-left: 10px;
+    border: none;
   }
   
   .submit-button {
@@ -67,4 +75,21 @@
     color: red;
     font-size: 14px;
   }
+
+
+  input[type="file"]::file-selector-button {
+    border: 2px solid  #6b1515;
+    padding: 0.2em 0.2em;
+    background-color:  #6b1515;
+    transition: 0.5s;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'DarkerGrotesque', sans-serif;
+  }
   
+  input[type="file"]::file-selector-button:hover {
+    background-color: #fafafa;
+    border: 2px solid #6b1515;
+    color: #000;
+    font-family: 'DarkerGrotesque', sans-serif;
+  }
