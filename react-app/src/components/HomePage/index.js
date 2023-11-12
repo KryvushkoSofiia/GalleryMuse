@@ -52,7 +52,7 @@ const GalleryList = () => {
       console.error('Error adding to favorites:', error);
     }
   };
-  
+
   const removeFromFavorites = async (galleryId) => {
     try {
       await dispatch(removeFromFavoritesThunk(galleryId));
@@ -65,8 +65,21 @@ const GalleryList = () => {
   return (
     <>
       <div className='home-page__banner'>
-        Banner
-      </div>
+        <div className="wrapper">
+          <div className='text-popup-left'>
+            Unleash the beauty of art and culture
+          </div>
+    
+          <div className='text-popup-right'>
+            Explore galleries you love,  share your favorites with the world
+          </div>
+        </div>
+        <div className='art-description'>
+        The Dessert: Harmony in Red by Henri Matisse (also known as Red Room or Harmony in Red), 1908, Hermitage Museum
+        </div>
+
+
+      </div >
       <a href='#all-galleries'>
         <img id='arrow' src={Arrow} alt='Arrow' className='svg-image' />
       </a>
