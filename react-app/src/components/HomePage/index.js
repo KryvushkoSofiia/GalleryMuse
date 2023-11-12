@@ -14,24 +14,6 @@ const GalleryList = () => {
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
   const currentUser = useSelector((state) => state.session.user);
 
-  const addToFavorites = async (galleryId) => {
-    try {
-      await dispatch(addToFavoritesThunk(galleryId));
-      await dispatch(getGalleryFavoritesThunk());
-    } catch (error) {
-      console.error('Error adding to favorites:', error);
-    }
-  };
-
-  const removeFromFavorites = async (galleryId) => {
-    try {
-      await dispatch(removeFromFavoritesThunk(galleryId));
-      await dispatch(getGalleryFavoritesThunk());
-    } catch (error) {
-      console.error('Error removing from favorites:', error);
-    }
-  };
-
   const [searchTerm, setSearchTerm] = useState('');
   const [locationSearchTerm, setLocationSearchTerm] = useState('');
 
@@ -46,7 +28,13 @@ const GalleryList = () => {
     };
 
     fetchData();
-  }, [dispatch, galleryFavorites.length]);
+  }, [dispatch, galleryFavorites.length, currentUser]); // Include currentUser in the dependency array
+
+  // Reset state when user changes
+  useEffect(() => {
+    setSearchTerm('');
+    setLocationSearchTerm('');
+  }, [currentUser]);
 
   // Filter galleries by location based on locationSearchTerm
   const filteredGalleries = galleries.filter((gallery) => {
@@ -55,6 +43,24 @@ const GalleryList = () => {
       gallery.title.toLowerCase().includes(searchTerm.toLowerCase()) // Also filter by title
     );
   });
+
+  const addToFavorites = async (galleryId) => {
+    try {
+      await dispatch(addToFavoritesThunk(galleryId));
+      await dispatch(getGalleryFavoritesThunk());
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+    }
+  };
+  
+  const removeFromFavorites = async (galleryId) => {
+    try {
+      await dispatch(removeFromFavoritesThunk(galleryId));
+      await dispatch(getGalleryFavoritesThunk());
+    } catch (error) {
+      console.error('Error removing from favorites:', error);
+    }
+  };
 
   return (
     <>

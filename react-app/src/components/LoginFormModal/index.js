@@ -22,6 +22,7 @@ function LoginFormModal() {
       setErrors(data);
     } else {
       closeModal()
+      
     }
   };
 
