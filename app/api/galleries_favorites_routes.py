@@ -71,22 +71,21 @@ def remove_gallery_from_favorites(gallery_id):
 
 
 
-@gallery_favorite_routes.route('/<int:favorite_id>', methods=['PUT'])
-@login_required
-def update_gallery_status(favorite_id):
-    user_id = current_user.id
+# @gallery_favorite_routes.route('/<int:favorite_id>', methods=['PUT'])
+# @login_required
+# def update_gallery_status(favorite_id):
+#     user_id = current_user.id
 
-    favorite = GalleryFavorite.query.filter_by(id=favorite_id, user_id=user_id).first()
-    if favorite:
-        gallery_id = favorite.gallery_id
-        gallery = Gallery.query.get(gallery_id)
+#     favorite = GalleryFavorite.query.filter_by(id=favorite_id, user_id=user_id).first()
+#     if favorite:
+#         gallery_id = favorite.gallery_id
+#         gallery = Gallery.query.get(gallery_id)
 
-        if gallery:
-            # Toggle the status: if it's true, make it false; if it's false, make it true
-            gallery.status = not gallery.status
-            db.session.commit()
-            return {'message': 'Gallery status updated successfully'}, 200
-        else:
-            return {'message': 'Gallery not found'}, 404
-    else:
-        return {'message': 'Gallery favorite not found'}, 404
+#         if gallery:
+#             gallery.status = not gallery.status
+#             db.session.commit()
+#             return {'message': 'Gallery status updated successfully'}, 200
+#         else:
+#             return {'message': 'Gallery not found'}, 404
+#     else:
+#         return {'message': 'Gallery favorite not found'}, 404
