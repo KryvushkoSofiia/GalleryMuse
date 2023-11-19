@@ -11,6 +11,7 @@ import CreateNewGallery from "./components/CreateNewGallery";
 import UpdateGallery from "./components/UpdateGallery";
 import FavoriteGalleries from "./components/FavoriteGalleries";
 import MyGalleries from "./components/MyGalleries";
+import VisitedGalleries from "./components/VisitedGalleries";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/galleries/update/:galleryId" component={UpdateGallery} />
           <Route exact path="/favorite-galleries" component={FavoriteGalleries} />
           <Route exact path="/my-galleries" component={MyGalleries} />
+          <Route exact path="/visited-galleries" component={VisitedGalleries} />
           <Route path="/login" >
             <LoginFormPage />
           </Route>

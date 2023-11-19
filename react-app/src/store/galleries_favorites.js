@@ -77,25 +77,25 @@ export const removeFromFavoritesThunk = (galleryId) => async (dispatch) => {
 
 
 
-export const updateFavoriteGalleryThunk = (galleryId, newStatus) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/galleries_favorites/${galleryId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: newStatus }),
-    });
-    if (response.ok) {
-      dispatch(updateGalleryStatus(galleryId, newStatus));
-    } else {
-      throw new Error('Failed to update gallery status');
-    }
-  } catch (error) {
-    console.error('Error in updateGalleryStatusThunk:', error);
-    throw error;
-  }
-};
+// export const updateFavoriteGalleryThunk = (galleryId, newStatus) => async (dispatch) => {
+//   try {
+//     const response = await fetch(`/api/galleries_favorites/${galleryId}`, {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ status: newStatus }),
+//     });
+//     if (response.ok) {
+//       dispatch(updateGalleryStatus(galleryId, newStatus));
+//     } else {
+//       throw new Error('Failed to update gallery status');
+//     }
+//   } catch (error) {
+//     console.error('Error in updateGalleryStatusThunk:', error);
+//     throw error;
+//   }
+// };
 
 
 const initialState = {

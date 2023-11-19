@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import galleries from './galleries'
 import galleryFavoritesReducer from './galleries_favorites';
+import galleryVisitedReducer from './visited_galleries'
 
 const rootReducer = combineReducers({
   session,
   galleries,
   galleryFavorites: galleryFavoritesReducer,
+  galleryVisited: galleryVisitedReducer,
 });
 
 
