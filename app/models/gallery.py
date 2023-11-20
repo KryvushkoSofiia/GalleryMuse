@@ -27,6 +27,10 @@ class Gallery(db.Model):
         'GalleryFavorite', back_populates='gallery', cascade='all, delete-orphan'
     )
 
+    visited_by = db.relationship(
+        'VisitedGallery', back_populates='gallery', cascade='all, delete-orphan'
+    )
+
     def to_dict(self):
         return {
             "id": self.id,

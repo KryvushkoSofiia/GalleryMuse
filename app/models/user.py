@@ -27,6 +27,10 @@ class User(db.Model, UserMixin):
         "GalleryFavorite", back_populates="user", cascade="all, delete-orphan"
     )
 
+    visited_galleries = db.relationship(
+        "VisitedGallery", back_populates="user", cascade="all, delete-orphan"
+    )
+
     @property
     def password(self):
         return self.hashed_password
