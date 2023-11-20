@@ -48,21 +48,21 @@ def remove_gallery_from_visited(gallery_id):
         return {"message": "Gallery not in visited"}, 200
 
 
-@visited_galleries_routes.route("/<int:favorite_id>", methods=["PUT"])
-@login_required
-def update_visited_status(favorite_id):
-    user_id = current_user.id
+# @visited_galleries_routes.route("/<int:favorite_id>", methods=["PUT"])
+# @login_required
+# def update_visited_status(favorite_id):
+#     user_id = current_user.id
 
-    visited = VisitedGallery.query.filter_by(id=favorite_id, user_id=user_id).first()
-    if visited:
-        gallery_id = visited.gallery_id
-        gallery = Gallery.query.get(gallery_id)
+#     visited = VisitedGallery.query.filter_by(id=favorite_id, user_id=user_id).first()
+#     if visited:
+#         gallery_id = visited.gallery_id
+#         gallery = Gallery.query.get(gallery_id)
 
-        if gallery:
-            gallery.status = not gallery.status
-            db.session.commit()
-            return {"message": "Gallery status updated successfully"}, 200
-        else:
-            return {"message": "Gallery not found"}, 404
-    else:
-        return {"message": "Gallery favorite not found"}, 404
+#         if gallery:
+#             gallery.status = not gallery.status
+#             db.session.commit()
+#             return {"message": "Gallery status updated successfully"}, 200
+#         else:
+#             return {"message": "Gallery not found"}, 404
+#     else:
+#         return {"message": "Gallery favorite not found"}, 404
