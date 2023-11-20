@@ -8,6 +8,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.galleries_routes import galleries_routes
+from .api.visited_galleries_routes import visited_galleries_routes
 from .api.galleries_favorites_routes import gallery_favorite_routes
 from .seeds import seed_commands
 from .config import Config
@@ -32,6 +33,7 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(galleries_routes, url_prefix='/api/galleries')
 app.register_blueprint(gallery_favorite_routes, url_prefix='/api/galleries_favorites')
+app.register_blueprint(visited_galleries_routes, url_prefix='/api/visited_galleries')
 db.init_app(app)
 Migrate(app, db)
 

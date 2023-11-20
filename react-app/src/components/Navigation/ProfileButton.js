@@ -7,12 +7,11 @@ import SignupFormModal from "../SignupFormModal";
 import { NavLink } from "react-router-dom";
 
 import './ProfileButton.css'
-// import '../../fonts/fonts.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const ulRef = useRef();
+  const ulRef = useRef(null); // Initialize ulRef with null
 
   const openMenu = () => {
     if (showMenu) return;
@@ -23,7 +22,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) { // Check if ulRef.current is not null before accessing contains method
         setShowMenu(false);
       }
     };
@@ -42,7 +41,6 @@ function ProfileButton({ user }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-
     <>
       <button onClick={openMenu} className="profile-button">
         Profile
