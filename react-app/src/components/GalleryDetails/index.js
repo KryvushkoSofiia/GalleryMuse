@@ -1,6 +1,6 @@
 // GalleryDetail.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGalleryThunk } from '../../store/galleries';
 import { addToFavoritesThunk, getGalleryFavoritesThunk, removeFromFavoritesThunk } from '../../store/galleries_favorites';
@@ -13,37 +13,32 @@ const GalleryDetail = () => {
   const dispatch = useDispatch();
   const { galleryId } = useParams();
   const gallery = useSelector((state) => Object.values(state.galleries.singleGallery)[0]);
-  const currentUser = useSelector((state) => state.session.user);
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
   const visitedGalleries = useSelector((state) => state.galleryVisited.galleryVisited);
 
-  console.log("Visited Galleries", visitedGalleries);
+  const isVisited = useSelector((state) => {
+    const gallery = Object.values(state.galleries.singleGallery)[0];
+    return gallery?.id && state.galleryVisited.galleryVisited?.some((visited) => visited.gallery_id === gallery.id);
+  });
 
-  const getInitialIsFavorite = () => {
-    return gallery?.id && galleryFavorites?.some((favorite) => favorite.gallery_id === gallery.id);
-  };
-
-  const getInitialIsVisited = () => {
-    return gallery?.id && visitedGalleries?.some((visited) => visited.gallery_id === gallery.id);
-  };
-
-  const [isFavorite, setIsFavorite] = useState(getInitialIsFavorite());
-  const [isVisited, setIsVisited] = useState(getInitialIsVisited());
+  const isFavorite = useSelector((state) => {
+    const gallery = Object.values(state.galleries.singleGallery)[0];
+    return gallery?.id && state.galleryFavorites.galleryFavorites?.some((favorite) => favorite.gallery_id === gallery.id);
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch(getGalleryThunk(galleryId));
-        setIsFavorite(getInitialIsFavorite());
         await dispatch(getGalleryFavoritesThunk());
-        setIsVisited(getInitialIsVisited())
         await dispatch(getVisitedGalleryThunk());
       } catch (error) {
         console.error('Error fetching gallery:', error);
       }
     };
+
     fetchData();
-  }, [dispatch, galleryId, galleryFavorites.length, visitedGalleries.length]);
+  }, [dispatch, galleryId]);
 
   const addRemoveFavorites = async () => {
     try {
@@ -53,11 +48,9 @@ const GalleryDetail = () => {
         await dispatch(addToFavoritesThunk(galleryId));
       }
 
-      // Fetch the gallery data again to get the updated information
       await dispatch(getGalleryThunk(galleryId));
-      await dispatch(getGalleryFavoritesThunk()); // Update favorites state
+      await dispatch(getGalleryFavoritesThunk());
 
-      setIsFavorite(!isFavorite); // Update local state
     } catch (error) {
       console.error('Error adding/removing from favorites:', error);
     }
@@ -66,26 +59,18 @@ const GalleryDetail = () => {
   const toggleStatus = async () => {
     try {
       if (isVisited) {
-        // If visited, remove from visited
         await dispatch(removeFromVisitedThunk(galleryId));
       } else {
-        // If not visited, mark as visited
         await dispatch(addToVisitedThunk(galleryId));
       }
 
-      // Fetch the updated visited galleries
       await dispatch(getGalleryThunk(galleryId));
       await dispatch(getVisitedGalleryThunk());
 
-      setIsVisited(!isVisited);
     } catch (error) {
       console.error('Error toggling gallery status:', error);
     }
   };
-
-  useEffect(() => {
-    setIsFavorite(getInitialIsFavorite());
-  }, [galleryId, galleryFavorites]);
 
   if (!gallery) {
     return <div>Loading...</div>;
@@ -103,18 +88,18 @@ const GalleryDetail = () => {
       </div>
       <div className='gallery-status'>
         <p>Owner ID: {gallery.owner_id}</p>
-
       </div>
 
-      {currentUser ? (
+      {isVisited !== undefined && isFavorite !== undefined && (
         <div className='buttons-wrapper'>
           <button className={isVisited ? 'remove-visited' : 'add-to-visited'} onClick={toggleStatus}>
             {isVisited ? 'Mark as Not Visited' : 'Mark as Visited'}
           </button>
           <button className={isFavorite ? 'remove-favorite' : 'add-favorite'} onClick={addRemoveFavorites}>
             {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-          </button></div>
-      ) : null}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
