@@ -38,7 +38,7 @@ const VisitedGalleries = () => {
   };
 
   return (
-    <div className="background">
+    <div className="background-visited">
       <div className="visited-galleries_wrapper">
         <h1 className="visited-galleries_header">Visited Galleries</h1>
         {loading ? (
