@@ -108,7 +108,7 @@ const GalleryDetail = () => {
 
       {currentUser ? (
         <div className='buttons-wrapper'>
-          <button className={isFavorite ? 'remove-visited' : 'add-to-visited'} onClick={toggleStatus}>
+          <button className={isVisited ? 'remove-visited' : 'add-to-visited'} onClick={toggleStatus}>
             {isVisited ? 'Mark as Not Visited' : 'Mark as Visited'}
           </button>
           <button className={isFavorite ? 'remove-favorite' : 'add-favorite'} onClick={addRemoveFavorites}>
