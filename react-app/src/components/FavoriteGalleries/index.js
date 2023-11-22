@@ -13,31 +13,31 @@ const GalleryFavoritesList = () => {
   const currentUser = useSelector((state) => state.session.user);
   const [loading, setLoading] = useState(true);
   const [currentStatus, setCurrentStatus] = useState({});
-  const visitedGalleries = useSelector((state) => state.galleryVisited.galleryVisited);
+  // const visitedGalleries = useSelector((state) => state.galleryVisited.galleryVisited);
   const galleries = useSelector((state) => Object.values(state.galleries.galleries));
 
   const findGalleryById = (galleryId) => {
     return galleries?.find((gallery) => gallery.id === galleryId);
   };
 
-  const isGalleryVisited = (galleryId) => {
-    return visitedGalleries.some((visited) => visited.gallery_id === galleryId);
-  };
+  // const isGalleryVisited = (galleryId) => {
+  //   return visitedGalleries.some((visited) => visited.gallery_id === galleryId);
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await dispatch(getGalleriesThunk());
         await dispatch(getGalleryFavoritesThunk());
-        await dispatch(getVisitedGalleryThunk());
+        // await dispatch(getVisitedGalleryThunk());
 
-        if (galleries) {
-          const initialStatus = {};
-          galleries.forEach((gallery) => {
-            initialStatus[gallery.id] = isGalleryVisited(gallery.id);
-          });
-          setCurrentStatus(initialStatus);
-        }
+        // if (galleries) {
+        //   const initialStatus = {};
+        //   galleries.forEach((gallery) => {
+        //     initialStatus[gallery.id] = isGalleryVisited(gallery.id);
+        //   });
+        //   setCurrentStatus(initialStatus);
+        // }
 
         setLoading(false);
       } catch (error) {
@@ -90,9 +90,9 @@ const GalleryFavoritesList = () => {
                         )}
                       </NavLink>
                       <div className="favorite-galleries_buttons">
-                        <button>
+                        {/* <button>
                           {isGalleryVisited(favorite.gallery_id) ? 'Visited' : 'Not Visited'}
-                        </button>
+                        </button> */}
                         <button onClick={() => handleDelete(favorite.gallery_id)}>Delete</button>
                       </div>
                     </li>

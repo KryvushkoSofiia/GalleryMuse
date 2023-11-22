@@ -95,8 +95,8 @@ const GalleryDetail = () => {
     <div className='gallery-details__wrapper'>
       <h2 className='gallery-details_title'>{gallery.title}</h2>
       <div className='gallery-info'>
-        <p>{gallery.description}</p>
-        <p>{gallery.location}</p>
+        <p>Description: {gallery.description}</p>
+        <p>Location: {gallery.location}</p>
       </div>
       <div className='gallery-image'>
         <img src={gallery.gallery_img} alt={gallery.title} />
@@ -107,13 +107,13 @@ const GalleryDetail = () => {
       </div>
 
       {currentUser ? (
-        <>
-          <button className={isFavorite ? 'remove-visited' : 'add-to-visited'}  onClick={toggleStatus}>
+        <div className='buttons-wrapper'>
+          <button className={isFavorite ? 'remove-visited' : 'add-to-visited'} onClick={toggleStatus}>
             {isVisited ? 'Mark as Not Visited' : 'Mark as Visited'}
           </button>
           <button className={isFavorite ? 'remove-favorite' : 'add-favorite'} onClick={addRemoveFavorites}>
             {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-          </button></>
+          </button></div>
       ) : null}
     </div>
   );

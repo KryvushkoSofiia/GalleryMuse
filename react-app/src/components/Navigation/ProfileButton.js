@@ -7,9 +7,11 @@ import SignupFormModal from "../SignupFormModal";
 import { NavLink } from "react-router-dom";
 
 import './ProfileButton.css'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef(null); // Initialize ulRef with null
 
@@ -35,6 +37,7 @@ function ProfileButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    history.push('/');
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -52,6 +55,7 @@ function ProfileButton({ user }) {
             <li className="profile_dropdown__item">{user.email}</li>
             <li className="profile_dropdown__item"><NavLink to={`/create-gallery`} activeClassName="active-link" className="dropdown_item__url">create gallery</NavLink></li>
             <li className="profile_dropdown__item"><NavLink to={`/my-galleries`} activeClassName="active-link" className="dropdown_item__url">my galleries</NavLink></li>
+            <li className="profile_dropdown__item"><NavLink to={`/visited-galleries`} activeClassName="active-link" className="dropdown_item__url">visited</NavLink></li>
             <li className="profile_dropdown__item"><NavLink to={`/favorite-galleries`} activeClassName="active-link" className="dropdown_item__url">♡</NavLink></li>
             <li>
               <button className="profile_dropdown__logout" onClick={handleLogout}>Log Out</button>

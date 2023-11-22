@@ -16,7 +16,7 @@
 
   .profile_dropdown__wrapper {
     background-color: #fff;
-    width: 200px;
+    /* width: 200px; */
     display: flex;
     flex-direction: column;
     position: absolute;

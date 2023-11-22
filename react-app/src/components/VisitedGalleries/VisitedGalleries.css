@@ -1,0 +1,73 @@
+.background {
+    background-color: #f0f0f0;
+    padding: 20px;
+
+  }
+  
+  .visited-galleries_wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .visited-galleries_header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .visited-gallery-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .visited-gallery-details img {
+    max-width: 100px;
+    margin-right: 15px;
+  }
+  
+  .visited-gallery-details h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .visited-gallery-details p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .visited-gallery-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .visited-gallery-actions span {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .visited-gallery-actions a {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 15px;
+    text-decoration: none;
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+  
+  .delete-button {
+    background-color: #460b0b;
+    font-size: 16px;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .gallery-title{
+    color: #000;
+  }
