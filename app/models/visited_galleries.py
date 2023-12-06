@@ -11,6 +11,7 @@ class VisitedGallery(db.Model):
     gallery_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('galleries.id')))
 
     user = db.relationship('User', back_populates='visited_galleries')
+    
     gallery = db.relationship('Gallery', back_populates='visited_by')
 
 

@@ -36,7 +36,6 @@ def seed_galleries(num_galleries=20):
         title = fake.sentence()[:50]
         description = fake.paragraph()
         location = fake.city()
-        status = bool(random.choice([True, False]))
 
         # Choose a real image URL for seeding
         gallery_img = random.choice(real_image_urls)
@@ -46,7 +45,6 @@ def seed_galleries(num_galleries=20):
             title=title,
             description=description,
             location=location,
-            status=status,
             gallery_img=gallery_img,
         )
         db.session.add(gallery)

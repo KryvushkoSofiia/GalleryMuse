@@ -111,4 +111,4 @@ def delete_gallery(galleryId):
         db.session.commit()
         return 'Successful deletion'
     else:
-        return 'Error while trying to delete'
+        return 'Error while trying to delete gallery'
