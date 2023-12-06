@@ -21,6 +21,10 @@ class User(db.Model, UserMixin):
 
     galleries = db.relationship(
         "Gallery", back_populates="user", cascade="all, delete-orphan"
+    )   
+    
+    reviews = db.relationship(
+        "Review", back_populates="user", cascade="all, delete-orphan"
     )
 
     favorite_galleries = db.relationship(
@@ -30,6 +34,8 @@ class User(db.Model, UserMixin):
     visited_galleries = db.relationship(
         "VisitedGallery", back_populates="user", cascade="all, delete-orphan"
     )
+
+ 
 
     @property
     def password(self):
