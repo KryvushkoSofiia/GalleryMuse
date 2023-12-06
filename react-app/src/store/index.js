@@ -1,13 +1,15 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import session from './session'
-import galleries from './galleries'
+import session from './session';
+import galleries from './galleries';
+import reviews from './reviews';
 import galleryFavoritesReducer from './galleries_favorites';
 import galleryVisitedReducer from './visited_galleries'
 
 const rootReducer = combineReducers({
   session,
   galleries,
+  reviews,
   galleryFavorites: galleryFavoritesReducer,
   galleryVisited: galleryVisitedReducer,
 });

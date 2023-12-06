@@ -16,7 +16,6 @@ const CreateNewGallery = () => {
         title: "",
         description: "",
         location: "",
-        status: false,
         gallery_img: null,
     });
 
@@ -89,7 +88,7 @@ const CreateNewGallery = () => {
             newFormData.append("title", formData.title);
             newFormData.append("description", formData.description);
             newFormData.append("location", formData.location);
-            newFormData.append("status", formData.status);
+            // newFormData.append("status", formData.status);
 
             console.log("new form gallery_img", newFormData.get("gallery_img"));
             console.log("new form title", newFormData.get("title"));
@@ -148,7 +147,7 @@ const CreateNewGallery = () => {
                         {errors.location && <span className="error">{errors.location}</span>}
                     </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label htmlFor="status" className="label">Status:</label>
                         <select
                             id="status"
@@ -160,7 +159,7 @@ const CreateNewGallery = () => {
                             <option value={true}>Visited</option>
                             <option value={false}>Not Visited</option>
                         </select>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                         <label htmlFor="gallery_img" className="label">Gallery Image:</label>

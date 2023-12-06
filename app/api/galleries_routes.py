@@ -54,7 +54,7 @@ def create_gallery():
             title=form.data['title'],
             description=form.data['description'],
             location=form.data['location'],
-            status=form.data['status'],
+            # status=form.data['status'],
             gallery_img=image_url,
         )
         db.session.add(gallery)
