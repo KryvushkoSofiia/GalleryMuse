@@ -108,7 +108,7 @@ export const deleteGalleryThunk = (galleryId) => async (dispatch) => {
     if (response.ok) {
         dispatch(deleteGallery(galleryId));
     } else {
-        throw new Error('Failed to udelete gallery');
+        throw new Error('Failed to delete gallery');
     }
 
 }
@@ -141,8 +141,8 @@ const galleriesReducer = (state = initialState, action) => {
             return newState
         case DELETE_GALLERY:
             newState = { ...state };
-            delete newState.galleries[action.galleryId]
-            return newState
+            delete newState.galleries[action.galleryId];
+            return newState;
         default:
             return state;
     }

@@ -201,3 +201,33 @@
 
   }
 }
+
+@media (max-width: 980px) {
+  .home-page__gallery {
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  
+}
+
+@media (max-width: 650px) {
+  .text-popup-left,
+  .text-popup-right{
+    font-size: 20px;
+    text-wrap: wrap;
+  }
+  
+}
+
+
+@media (max-width: 600px) {
+  .home-page__gallery {
+    width: calc(100%);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  
+}
