@@ -8,6 +8,7 @@ import { removeFromVisitedThunk, getVisitedGalleryThunk, addToVisitedThunk } fro
 import { useParams } from 'react-router-dom';
 
 import './GalleryDetails.css';
+import Reviews from '../Reviews';
 
 const GalleryDetail = () => {
   const dispatch = useDispatch();
@@ -100,6 +101,9 @@ const GalleryDetail = () => {
           </button>
         </div>
       )}
+      <div className='reviews'>
+        <Reviews galleryId={galleryId} />
+      </div>
     </div>
   );
 };
