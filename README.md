@@ -19,6 +19,25 @@ https://gallery-muse.onrender.com
 ## Wiki Links
 [DB Schema](https://github.com/KryvushkoSofiia/GalleryMuse/wiki/DB-Schema) | [Feature List](https://github.com/KryvushkoSofiia/GalleryMuse/wiki/Features) | [User Stories](https://github.com/KryvushkoSofiia/GalleryMuse/wiki/User-Stories)
 
+
+## Features
+
+### Galleries
+GalleryMuse main page displays a full screen banner and all galleries with two search bars (title and location search):
+![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/home_page_search_galleries.png?raw=true)
+### Service Detail
+![squirrel2](https://github.com/jzumbrunn21/Service_Squirrel/assets/126112107/0c2c6f46-2969-48e5-a49f-f1de3c7398e1)
+### Bookings
+All the user's bookings can be viewed and there are several modal buttons for varied user options.
+Multiple modals were decided here as the actions were brief as it needed little information for updates or simple confirmations for other actions.
+Calendar type date selection was chosen  to make the date update U/I quicker and the most readable.
+![squirrel3](https://github.com/jzumbrunn21/Service_Squirrel/assets/126112107/0c0f2fbf-ce58-4e58-9bce-a555c1004bbf)
+![squirrel4](https://github.com/jzumbrunn21/Service_Squirrel/assets/126112107/77e825c5-5b66-44f6-82aa-b95abf099657)
+
+### Booking, Billing, and Review Process
+https://github.com/jzumbrunn21/Service_Squirrel/assets/126112107/d8f9c4e8-7fe7-42d9-9a70-cfdb7d3deb8b
+
+
 ## Getting started
 1. Clone this repository (only this branch)
 
