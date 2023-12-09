@@ -17,7 +17,6 @@ const EditGallery = () => {
     title: "",
     description: "",
     location: "",
-    status: false,
     gallery_img: "",
   });
 
@@ -33,7 +32,6 @@ const EditGallery = () => {
         title: gallery.title,
         description: gallery.description,
         location: gallery.location,
-        status: gallery.status,
         gallery_img: gallery.gallery_img,
       });
     }
@@ -102,7 +100,6 @@ const EditGallery = () => {
       newFormData.append("title", formData.title);
       newFormData.append("description", formData.description);
       newFormData.append("location", formData.location);
-      newFormData.append("status", formData.status);
 
       console.log("Form data handleSubmit", formData);
       console.log("New uploaded image", image);
@@ -167,20 +164,6 @@ const EditGallery = () => {
                 className="text-input"
               />
               {errors.location && <span className="error">{errors.location}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="status" className="label">Status:</label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleInputChange}
-                className="select-input"
-              >
-                <option value={true}>Visited</option>
-                <option value={false}>Not Visited</option>
-              </select>
             </div>
 
             <div className="form-group">

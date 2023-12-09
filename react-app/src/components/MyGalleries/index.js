@@ -20,7 +20,7 @@ const MyGalleries = () => {
     const galleries = useSelector((state) =>
         Object.values(state.galleries.galleries)
     );
-    
+
     const myGalleries = currentUser ? galleries.filter((gallery) => gallery.owner_id === currentUser.id) : [];
 
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
@@ -41,41 +41,47 @@ const MyGalleries = () => {
             {currentUser ? (
                 <>
                     <h1 className='my-galleries__header'>My Galleries</h1>
-                    <div className='my-galleries_list__wrapper'>
-                        <ul className='my-galleries_list'>
-                            {myGalleries.map((gallery) => (
-                                <li key={gallery.id} className='my-galleries_list__item'>
-                                    <NavLink to={`/galleries/${gallery.id}`} className="my-galleries_list__item-desc">
-                                        <h2 className='title'>{gallery.title}</h2>
-                                        <img src={gallery.gallery_img} alt={gallery.title} />
-                                        <p>{gallery.description}</p>
-                                        <p>Location: {gallery.location}</p>
-                                    </NavLink>
-                                    <div className="gallery-actions">
-                                        <div className="gallery-buttons">
-                                            <Link
-                                                className="update-gallery-button"
-                                                to={`/galleries/update/${gallery.id}`}
-                                            >
-                                                Update
-                                            </Link>
-                                            <OpenModalButton
-                                                className="delete-button"
-                                                buttonText="Delete"
-                                                modalComponent={
-                                                    <DeleteConfirmationModal
-                                                        show={deleteConfirmation}
-                                                        onCancel={() => setDeleteConfirmation(false)}
-                                                        galleryId={gallery.id}
-                                                    />
-                                                }
-                                            />
+                    {myGalleries.length ? (
+                        <div className='my-galleries_list__wrapper'>
+                            <ul className='my-galleries_list'>
+                                {myGalleries.map((gallery) => (
+                                    <li key={gallery.id} className='my-galleries_list__item'>
+                                        <NavLink to={`/galleries/${gallery.id}`} className="my-galleries_list__item-desc">
+                                            <h2 className='title'>{gallery.title}</h2>
+                                            <img src={gallery.gallery_img} alt={gallery.title} />
+                                            <p>{gallery.description}</p>
+                                            <p>Location: {gallery.location}</p>
+                                        </NavLink>
+                                        <div className="gallery-actions">
+                                            <div className="gallery-buttons">
+                                                <Link
+                                                    className="update-gallery-button"
+                                                    to={`/galleries/update/${gallery.id}`}
+                                                >
+                                                    Update
+                                                </Link>
+                                                <OpenModalButton
+                                                    className="delete-button"
+                                                    buttonText="Delete"
+                                                    modalComponent={
+                                                        <DeleteConfirmationModal
+                                                            show={deleteConfirmation}
+                                                            onCancel={() => setDeleteConfirmation(false)}
+                                                            galleryId={gallery.id}
+                                                        />
+                                                    }
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>) : (
+                        <div className='no-galleries_wrapper'>
+                            <h2 className='no-galleries_header'>You do not have any galleries now. Create one using button below</h2>
+                            <NavLink to={`/create-gallery`} className="no-galleries_create_btn">Create gallery</NavLink>
+                        </div>)}
+
                 </>
             ) : (<p>You need to login to see your galleries.</p>)}
         </div>
