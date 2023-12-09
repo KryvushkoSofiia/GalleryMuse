@@ -90,7 +90,6 @@ def update_gallery(galleryId):
         gallery_to_update.title=form.data['title']
         gallery_to_update.description=form.data['description']
         gallery_to_update.location=form.data['location']
-        gallery_to_update.status=form.data['status']
         # gallery_to_update.gallery_img=form.data['gallery_img']
 
         db.session.commit()

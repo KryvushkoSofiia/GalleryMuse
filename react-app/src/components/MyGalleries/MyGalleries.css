@@ -84,4 +84,27 @@
   .delete-button:hover {
     background-color: #460b0b;
   }
+
+  .no-galleries_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .no-galleries_wrapper > *{
+    margin: 20px;
+  }
   
+  .no-galleries_header{
+    font-size: 24px;
+    text-align: center;
+    font-family: 'DarkerGrotesque', sans-serif;
+  }
+
+  .no-galleries_create_btn{
+    text-align: center;
+    background-color: #460b0b;
+    color: #fff;
+    font-family: 'DarkerGrotesque', sans-serif;
+    padding: 5px;
+  }

@@ -14,6 +14,7 @@ const UpdateReviewModal = ({ onSubmit, setShowReviewModal, reviewId }) => {
         review: '',
         star_rating: 0,
     });
+    const [errors, setErrors] = useState({});
 
     // Get all reviews from the Redux store
     const reviews = useSelector((state) => state.reviews.reviews);
@@ -34,10 +35,27 @@ const UpdateReviewModal = ({ onSubmit, setShowReviewModal, reviewId }) => {
         }
     }, [reviewId, reviews]);
 
+    useEffect(() => {
+
+        const newErrors = {};
+
+        if (reviewData.review.length < 4 || reviewData.review.length > 1000) {
+            newErrors.review = "Review must be between 4 and 1000 symbols";
+        }
+
+        if (reviewData.star_rating < 1 || reviewData.star_rating > 5) {
+            newErrors.star_rating = "Star rating must be between 1 and 5";
+        }
+
+        setErrors(newErrors);
+    }, [reviewData.review, reviewData.star_rating])
+
     const handleReviewSubmit = async (e) => {
         e.preventDefault();
 
-        // validations here
+        if (Object.keys(errors).length > 0) {
+            return;
+        }
 
         // Call updateReviewThunk with review data and reviewId
         try {
@@ -46,7 +64,7 @@ const UpdateReviewModal = ({ onSubmit, setShowReviewModal, reviewId }) => {
             onSubmit(updatedReview);
             closeModal();
             setShowReviewModal(false);
-           await  dispatch(readReviewsThunk());
+            await dispatch(readReviewsThunk());
         } catch (error) {
             console.error("Error updating review:", error.message);
         }
@@ -61,6 +79,7 @@ const UpdateReviewModal = ({ onSubmit, setShowReviewModal, reviewId }) => {
                     onChange={(e) => setReviewData({ ...reviewData, review: e.target.value })}
                     placeholder="Update your review here"
                 />
+                {errors.review && <p className="error-message">{errors.review}</p>}
             </div>
             <h4>Rating</h4>
             <div className="star-container">
@@ -74,6 +93,7 @@ const UpdateReviewModal = ({ onSubmit, setShowReviewModal, reviewId }) => {
                     </span>
                 ))}
             </div>
+            {errors.star_rating && <p className="error-message">{errors.star_rating}</p>}
             <button onClick={handleReviewSubmit}>Update review</button>
         </div>
     );

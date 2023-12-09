@@ -5,6 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 import HomePage from "./components/HomePage"
 import Reviews from "./components/Reviews";
 import GalleryDetails from "./components/GalleryDetails"
@@ -42,6 +43,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      {/* <Footer/> */}
     </>
   );
 }

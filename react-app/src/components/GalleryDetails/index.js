@@ -14,6 +14,7 @@ const GalleryDetail = () => {
   const dispatch = useDispatch();
   const { galleryId } = useParams();
   const gallery = useSelector((state) => Object.values(state.galleries.singleGallery)[0]);
+  const currentUser = useSelector((state) => state.session.user);
   const galleryFavorites = useSelector((state) => state.galleryFavorites.galleryFavorites);
   const visitedGalleries = useSelector((state) => state.galleryVisited.galleryVisited);
 
@@ -91,7 +92,7 @@ const GalleryDetail = () => {
         <p>Owner ID: {gallery.owner_id}</p>
       </div>
 
-      {isVisited !== undefined && isFavorite !== undefined && (
+      {currentUser && isVisited !== undefined && isFavorite !== undefined && (
         <div className='buttons-wrapper'>
           <button className={isVisited ? 'remove-visited' : 'add-to-visited'} onClick={toggleStatus}>
             {isVisited ? 'Mark as Not Visited' : 'Mark as Visited'}
