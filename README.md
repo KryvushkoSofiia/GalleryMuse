@@ -39,6 +39,8 @@ https://gallery-muse.onrender.com
 
 ### Video Walkthrough
 
+https://github.com/KryvushkoSofiia/GalleryMuse/assets/116222267/60e5b9c7-6c5e-4b9e-b80d-7c91e8646d49
+
 
 
 ## Getting started
