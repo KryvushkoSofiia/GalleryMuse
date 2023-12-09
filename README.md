@@ -36,11 +36,9 @@ https://gallery-muse.onrender.com
 ### Visited Galleries
 ![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/visited_galleries.png?raw=true)
 
-### Bookings
-
 
 ### Video Walkthrough
-![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/GalleryMuse_Walkthrough.mp4)
+
 
 
 ## Getting started
