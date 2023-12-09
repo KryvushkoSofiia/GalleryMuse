@@ -23,9 +23,11 @@ https://gallery-muse.onrender.com
 ## Features
 
 ### Galleries
+![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/home_page_banner.png?raw=true)
 GalleryMuse main page displays a full screen banner and all galleries with two search bars (title and location search):
 ![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/home_page_search_galleries.png?raw=true)
-### Service Detail
+### My Galleries
+![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/my_galleries.png?raw=true)
 ![squirrel2](https://github.com/jzumbrunn21/Service_Squirrel/assets/126112107/0c2c6f46-2969-48e5-a49f-f1de3c7398e1)
 ### Bookings
 All the user's bookings can be viewed and there are several modal buttons for varied user options.
