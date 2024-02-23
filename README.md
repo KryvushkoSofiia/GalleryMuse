@@ -23,7 +23,7 @@ https://gallery-muse.onrender.com
 ## Features
 
 ### Galleries
-##GalleryMuse main page displays a full screen banner and all galleries with two search bars (title and location search):
+## GalleryMuse main page displays a full screen banner and all galleries with two search bars (title and location search):
 ![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/home_page_banner.png?raw=true)
 ![gallerymuse1](https://github.com/KryvushkoSofiia/GalleryMuse/blob/main/readme_images/home_page_search_galleries.png?raw=true)
 
